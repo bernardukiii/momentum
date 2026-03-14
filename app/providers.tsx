@@ -28,38 +28,38 @@ const theme = extendTheme({
       'black-16': 'rgba(0, 0, 0, 0.16)',
       
       // === CORE BRAND ===
-      'bdki-primary-purple-light': '#C4B5FD',
-      'bdki-primary-purple': '#A78BFA',
-      'bdki-midnight-indigo': '#1E1B4B',
-      'bdki-primary-indigo-hover': '#6366F1',
-      'bdki-primary-indigo-active': '#4F46E5',
+      'primary-purple-light': '#C4B5FD',
+      'primary-purple': '#A78BFA',
+      'midnight-indigo': '#1E1B4B',
+      'primary-indigo-hover': '#6366F1',
+      'primary-indigo-active': '#4F46E5',
 
       // === ACCENT ===
-      'bdki-accent-lavender': '#DDD6FE',
-      'bdki-accent-soft': '#EDE9FE',
+      'accent-lavender': '#DDD6FE',
+      'accent-soft': '#EDE9FE',
 
       // === BACKGROUNDS ===
-      'bdki-bg-main': '#F8F7FF',
-      'bdki-bg-soft': '#F5F3FF',
-      'bdki-bg-card': '#FFFFFF',
+      'bg-main': '#F8F7FF',
+      'bg-soft': '#F5F3FF',
+      'bg-card': '#FFFFFF',
 
       // === TEXT ===
-      'bdki-text-primary': '#1F2937',
-      'bdki-text-secondary': '#4B5563',
-      'bdki-text-muted': '#6B7280',
-      'bdki-text-white': '#FFFFFF',
+      'text-primary': '#1F2937',
+      'text-secondary': '#4B5563',
+      'text-muted': '#6B7280',
+      'text-white': '#FFFFFF',
 
       // === STATES ===
-      'bdki-state-success': '#22C55E',
-      'bdki-state-warning': '#F59E0B',
-      'bdki-state-error': '#EF4444',
+      'state-success': '#22C55E',
+      'state-warning': '#F59E0B',
+      'state-error': '#EF4444',
 
       // === BORDERS ===
-      'bdki-border-soft': '#E9E7FF',
-      'bdki-border-default': '#DDD6FE',
+      'border-soft': '#E9E7FF',
+      'border-default': '#DDD6FE',
     },
     // Using 500-weight keys is best practice for Chakra components like Checkbox
-    bdkiRadioBtn: {
+    momentumRadioBtn: {
       500: '#A78BFA',
     },
     momentumLoaded: {
