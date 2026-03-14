@@ -7,6 +7,8 @@ import Image from "next/image"
 const Home: React.FC = () => {
   // Animation state
   const [isAnimating, setIsAnimating] = useState<boolean>(true)
+  // State
+  const [loggedIn, setLoggedIn] = useState<boolean>(false)
 
   //// STRAVA AUTH ////
   // Handle window
@@ -32,9 +34,8 @@ const Home: React.FC = () => {
 
       if (event.data.type === "STRAVA_AUTH_SUCCESS") {
           console.log("Authenticated!", event.data.code)
-          // Now you can trigger your loading state and redirect to /application
-          router.push('/application')
-          
+          // Allow the user to move on to the dashboard
+          setLoggedIn(true)
           // Clean up
           window.removeEventListener("message", receiveMessage)
           popup?.close()
@@ -64,8 +65,8 @@ const Home: React.FC = () => {
                   <h1 className="text-momentum-black font-bold text-4xl mb-2">Start your transformation today</h1>
                 </div>
 
-                {/* Social Buttons */}
-                <div className="space-y-3 mb-8">
+                {/* Strava Button */}
+                <div className="space-y-3 mb-8 cursor-pointer">
                   <button className="w-full h-12 px-4 flex justify-center items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
                           onClick={handleStravaLogin}
                   >
@@ -87,9 +88,12 @@ const Home: React.FC = () => {
                   </div>
                   <button 
                     type="submit"
-                    className="w-full h-12 bg-momentum-primary-purple hover:bg-momentum-primary-indigo-hover text-white font-bold rounded-lg shadow-lg shadow-momentum-primary-purple/20 transition-all active:scale-[0.98] disabled:opacity-70"
-                  >
-                    Continue
+                    className={ loggedIn ? 
+                                "w-full h-12 bg-momentum-primary-purple hover:bg-momentum-primary-indigo-hover text-white font-bold rounded-lg shadow-lg shadow-momentum-primary-purple/20 transition-all active:scale-[0.98] disabled:opacity-70"
+                                        :
+                                "w-full h-12 bg-momentum-primary-purple text-white font-bold rounded-lg shadow-lg shadow-momentum-primary-purple/20 transition-all opacity-50 pointer-events-none" }
+                    >
+                    Continue to dashboard
                   </button>
                 </form>
               </div>
