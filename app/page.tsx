@@ -18,8 +18,8 @@ const Home: React.FC = () => {
       >
         <div
           className="h-screen flex flex-col justify-around items-center bg-gradient-to-t 
-                     from-bdki-primary-purple
-                     via-bdki-bg-soft 
+                     from-momentum-primary-purple
+                     via-momentum-bg-soft 
                      via-90% 
                      to-white"
         >
@@ -35,7 +35,7 @@ const Home: React.FC = () => {
             </div>
 
             {/* Sign-up card */}
-            <div className="w-11/12 md:w-1/3 flex items-center justify-center bg-bdki-bg-main rounded-xl shadow-bdki-card p-6 mt-8 md:mt-0">
+            <div className="w-11/12 md:w-1/3 flex items-center justify-center bg-momentum-bg-main rounded-xl shadow-momentum-card p-6 mt-8 md:mt-0">
               
             </div>
           </section>
