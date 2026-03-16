@@ -1,7 +1,7 @@
-import EmailPassword from "./EmailPassword"
+import LogIn from "./LogIn"
 import { createSupabaseServerClient  } from "@/lib/supabase/server-client"
 
-export default async function EmailPasswordPage() {
+export default async function LogInPage() {
     // instantiate the server client
     const supabase = await createSupabaseServerClient()
     const {
@@ -10,5 +10,5 @@ export default async function EmailPasswordPage() {
 
     console.log( { user })
 
-    return <EmailPassword user={null} />
+    return <LogIn user={null} />
 }
