@@ -75,13 +75,13 @@ const LogIn: React.FC<LogInProps> = ({ user }) => {
                   <h1 className="text-momentum-black font-bold text-4xl mb-2">Start your transformation today</h1>
                 </div>
 
-                {/* Strava Button */}
+                {/* Provider Button */}
                 <div className="space-y-3 mb-8 cursor-pointer">
                   <button className="w-full h-12 px-4 flex justify-center items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
                           onClick={handleStravaLogin}
                   >
-                    <Image src="/strava-logo.svg" width={24} height={24} alt="strava" />
-                    <span className="ml-3 font-semibold text-momentum-midnight-indigo">Log in with Strava</span>
+                    <Image src="/Google.png" width={24} height={24} alt="strava" />
+                    <span className="ml-3 font-semibold text-momentum-midnight-indigo">Log in with Google</span>
                   </button>
                 </div>
 
