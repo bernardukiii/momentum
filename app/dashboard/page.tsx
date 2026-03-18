@@ -18,7 +18,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     
     if (!error) {
       // Refresh to update server-side session and redirect to home/login
-      router.push('/')
+      router.push('/signin')
       router.refresh()
     } else {
       console.error("Error signing out:", error.message)
