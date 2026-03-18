@@ -10,7 +10,7 @@ type LogInProps = {
     onSwitch: () => void
 }
 
-const LogIn: React.FC<LogInProps> = ({ user }) => {
+const LogIn: React.FC<LogInProps> = ({ user, onSwitch }) => {
   // Animation state
   const [isAnimating, setIsAnimating] = useState<boolean>(true)
   // State
@@ -65,6 +65,16 @@ const LogIn: React.FC<LogInProps> = ({ user }) => {
                       className="h-11 bg-momentum-gray-secondary rounded-lg px-4 outline-none border border-transparent focus:border-momentum-primary-purple transition-all"
                     />
                   </div>
+
+                  <p className="text-center text-sm text-momentum-black-64 mt-4">
+                    <button 
+                      type="button" 
+                      onClick={onSwitch} 
+                      className="ml-1 text-momentum-primary-purple font-bold hover:underline"
+                    >
+                      Sign Up
+                    </button>
+                  </p>
 
                   <button 
                     type="submit"

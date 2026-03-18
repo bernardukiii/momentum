@@ -16,9 +16,9 @@ const AuthToggle: React.FC<AuthToggleProps> = ({ user }) => {
   return (
     <div>
       {mode === 'signup' ? (
-        <SignUp onSwitch={() => setMode('signin')} />
+        <SignUp user={user} onSwitch={() => setMode('signin')} />
       ) : (
-        <LogIn onSwitch={() => setMode('signup')} />
+        <LogIn user={user} onSwitch={() => setMode('signup')} />
       )}
     </div>
   )
