@@ -46,61 +46,12 @@ const Home: React.FC = () => {
   }
 
   return (
-    <main className={isAnimating ? "overflow-hidden" : ""}>
-      <motion.div
-        initial={{ x: "100%" }}
-        animate={{ x: 0 }}
-        transition={{ duration: 0.8, ease: "easeInOut" }}
-        onAnimationComplete={() => setIsAnimating(false)}
-      >
+    <main className=''>
         <div className="h-screen flex flex-col justify-around items-center bg-linear-to-t from-momentum-primary-purple via-momentum-bg-soft via-90% to-white">
           <section className="w-full flex flex-col justify-between items-center">
-            
-            {/* Merged Sign-up card */}
-            <div className="w-11/12 md:w-[450px] bg-momentum-bg-card rounded-2xl shadow-2xl p-8 mt-8 md:mt-0">
-              <div className="w-full">
-                
-                {/* Header */}
-                <div className="mb-8">
-                  <h1 className="text-momentum-black font-bold text-4xl mb-2">Start your transformation today</h1>
-                </div>
-
-                {/* Strava Button */}
-                <div className="space-y-3 mb-8 cursor-pointer">
-                  <button className="w-full h-12 px-4 flex justify-center items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
-                          onClick={handleStravaLogin}
-                  >
-                    <Image src="/strava-logo.svg" width={24} height={24} alt="strava" />
-                    <span className="ml-3 font-semibold text-momentum-midnight-indigo">Log in with Strava</span>
-                  </button>
-                </div>
-
-                {/* Form Logic */}
-                <form  className="space-y-6">
-                  <div className="flex flex-col">
-                    <label className="text-momentum-black-64 font-semibold mb-2 text-sm">Name</label>
-                    <input 
-                      type="text" 
-                      value={''}
-                      placeholder="ie: John"
-                      className="h-11 bg-momentum-gray-secondary rounded-lg px-4 outline-none border border-transparent focus:border-momentum-primary-purple transition-all"
-                    />
-                  </div>
-                  <button 
-                    type="submit"
-                    className={ loggedIn ? 
-                                "w-full h-12 bg-momentum-primary-purple hover:bg-momentum-primary-indigo-hover text-white font-bold rounded-lg shadow-lg shadow-momentum-primary-purple/20 transition-all active:scale-[0.98] disabled:opacity-70"
-                                        :
-                                "w-full h-12 bg-momentum-primary-purple text-white font-bold rounded-lg shadow-lg shadow-momentum-primary-purple/20 transition-all opacity-50 pointer-events-none" }
-                    >
-                    Continue to dashboard
-                  </button>
-                </form>
-              </div>
-            </div>
+            LANDING PAGE
           </section>
         </div>
-      </motion.div>
     </main>
   )
 }
