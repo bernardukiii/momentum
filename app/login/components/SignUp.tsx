@@ -18,12 +18,6 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
   
   return (
     <main className={isAnimating ? "overflow-hidden" : ""}>
-      <motion.div
-        initial={{ x: "100%" }}
-        animate={{ x: 0 }}
-        transition={{ duration: 0.8, ease: "easeInOut" }}
-        onAnimationComplete={() => setIsAnimating(false)}
-      >
         <div className="h-screen flex flex-col justify-around items-center bg-linear-to-t from-momentum-primary-purple via-momentum-bg-soft via-90% to-white">
           <section className="w-full flex flex-col justify-between items-center">
             
@@ -100,7 +94,6 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
             </div>
           </section>
         </div>
-      </motion.div>
     </main>
   )
 }
