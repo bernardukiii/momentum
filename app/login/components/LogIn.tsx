@@ -20,41 +20,7 @@ const LogIn: React.FC<LogInProps> = ({ user }) => {
   // MODE setter
   const [mode, setMode] = useState('signup')
 
-  //// STRAVA AUTH ////
-  // Handle window
-  const handleStravaLogin = () => {
-    const width = 500
-    const height = 600
-    const left = window.screenX + (window.outerWidth - width) / 2
-    const top = window.screenY + (window.outerHeight - height) / 2
-
-    const STRAVA_AUTH_URL = `https://www.strava.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_STRAVA_REDIRECT_URI}&response_type=code&scope=read,activity:read_all`
-
-    // Open the popup
-    const popup = window.open(
-      STRAVA_AUTH_URL,
-      "Strava Login",
-      `width=${width},height=${height},top=${top},left=${left}`
-    )
-
-    // Listen for the "success" message from the popup
-    const receiveMessage = (event: MessageEvent) => {
-      // SECURITY: Ensure the message comes from your own domain
-      if (event.origin !== window.location.origin) return
-
-      if (event.data.type === "STRAVA_AUTH_SUCCESS") {
-          console.log("Authenticated!", event.data.code)
-          // Allow the user to move on to the dashboard
-          setLoggedIn(true)
-          // Clean up
-          window.removeEventListener("message", receiveMessage)
-          popup?.close()
-        }
-      }
-
-    window.addEventListener("message", receiveMessage)
-  }
-
+  
   return (
     <main className={isAnimating ? "overflow-hidden" : ""}>
       <motion.div
@@ -77,9 +43,7 @@ const LogIn: React.FC<LogInProps> = ({ user }) => {
 
                 {/* Provider Button */}
                 <div className="space-y-3 mb-8 cursor-pointer">
-                  <button className="w-full h-12 px-4 flex justify-center items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
-                          onClick={handleStravaLogin}
-                  >
+                  <button className="w-full h-12 px-4 flex justify-center items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group">
                     <Image src="/Google.png" width={24} height={24} alt="strava" />
                     <span className="ml-3 font-semibold text-momentum-midnight-indigo">Log in with Google</span>
                   </button>
