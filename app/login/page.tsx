@@ -1,14 +1,13 @@
-import LogIn from "./components/LogIn"
-import { createSupabaseServerClient  } from "@/lib/supabase/server-client"
+import AuthToggle from "./components/AuthToggle"
+import { createSupabaseServerClient } from "@/lib/supabase/server-client"
 
 export default async function LogInPage() {
-    // instantiate the server client
+    // 1. Instantiate the server client
     const supabase = await createSupabaseServerClient()
-    const {
-        data: { user }
-    } = await supabase.auth.getUser()
+    
+    // 2. Get the session user
+    const { data: { user } } = await supabase.auth.getUser()
 
-    console.log( { user })
-
-    return <LogIn user={null} />
+    // 3. Pass that user to the client component
+    return <AuthToggle user={user} />
 }
