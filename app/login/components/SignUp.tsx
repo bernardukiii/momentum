@@ -38,6 +38,9 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
     const { error, data } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/dashboard`
+        }
     })
 
     setLoading(false)
