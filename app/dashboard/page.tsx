@@ -10,6 +10,7 @@ type DashboardProps = {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ user }) => {
+  console.log('user in dashboard', user)
   const supabase = getSupabaseBrowserClient()
   const router = useRouter()
 
