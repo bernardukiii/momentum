@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { User } from '@supabase/supabase-js'
 import LogIn from './LogIn'
 import SignUp from './SignUp'
 
