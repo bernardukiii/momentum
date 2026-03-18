@@ -88,7 +88,17 @@ const LogIn: React.FC<LogInProps> = ({ user }) => {
                 {/* Form Logic */}
                 <form  className="space-y-6">
                   <div className="flex flex-col">
-                    <label className="text-momentum-black-64 font-semibold mb-2 text-sm">Name</label>
+                    <label className="text-momentum-black-64 font-semibold mb-2 text-sm">E-mail</label>
+                    <input 
+                      type="text"
+                      value={''}
+                      placeholder="ie: John"
+                      className="h-11 bg-momentum-gray-secondary rounded-lg px-4 outline-none border border-transparent focus:border-momentum-primary-purple transition-all"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <label className="text-momentum-black-64 font-semibold mb-2 text-sm">Password</label>
                     <input 
                       type="text" 
                       value={''}
@@ -96,6 +106,7 @@ const LogIn: React.FC<LogInProps> = ({ user }) => {
                       className="h-11 bg-momentum-gray-secondary rounded-lg px-4 outline-none border border-transparent focus:border-momentum-primary-purple transition-all"
                     />
                   </div>
+
                   <button 
                     type="submit"
                     className={ loggedIn ? 
