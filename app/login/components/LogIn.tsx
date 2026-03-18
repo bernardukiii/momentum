@@ -7,6 +7,7 @@ import Image from "next/image"
 
 type LogInProps = {
     user: User | null
+    onSwitch: () => void
 }
 
 const LogIn: React.FC<LogInProps> = ({ user }) => {

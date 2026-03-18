@@ -7,6 +7,7 @@ import Image from "next/image"
 
 type SignUpProps = {
     user: User | null
+    onSwitch: () => void
 }
 
 const SignUp: React.FC<SignUpProps> = ({ user }) => {
