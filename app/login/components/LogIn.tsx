@@ -56,8 +56,8 @@ const LogIn: React.FC<LogInProps> = ({ user, onSwitch }) => {
     } else {
         setSignInStatus("Success! Redirecting...")
         // 2. Refresh the page or push to dashboard to update server session
-        router.push('/dashboard')
         router.refresh()
+        router.push('/dashboard')
     }
   }
 
