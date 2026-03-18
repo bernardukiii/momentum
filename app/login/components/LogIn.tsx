@@ -9,17 +9,11 @@ type LogInProps = {
     user: User | null
 }
 
-type Mode = 'signup' | 'signin'
-
-
 const LogIn: React.FC<LogInProps> = ({ user }) => {
   // Animation state
   const [isAnimating, setIsAnimating] = useState<boolean>(true)
   // State
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
-  // MODE setter
-  const [mode, setMode] = useState('signup')
-
   
   return (
     <main className={isAnimating ? "overflow-hidden" : ""}>
