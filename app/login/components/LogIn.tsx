@@ -2,7 +2,7 @@
 
 import { User } from '@supabase/supabase-js'
 import { getSupabaseBrowserClient } from '@/lib/supabase/browser-client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from "next/image"
 import { useRouter } from 'next/navigation' // Added for redirecting
 
@@ -14,6 +14,9 @@ type LogInProps = {
 const LogIn: React.FC<LogInProps> = ({ user, onSwitch }) => {
   const router = useRouter()
   const supabase = getSupabaseBrowserClient()
+
+  // USER listener
+  const [currentUser, setCurrentUser] = useState<User | null>(user)
   
   // 1. Input Listeners
   const [email, setEmail] = useState('')
@@ -22,6 +25,19 @@ const LogIn: React.FC<LogInProps> = ({ user, onSwitch }) => {
   // Status and Loading
   const [signInStatus, setSignInStatus] = useState('')
   const [loading, setLoading] = useState(false)
+
+  // On auth state change
+  useEffect(() => {
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setCurrentUser(session?.user ?? null)
+      }
+    )
+
+    return () => {
+      listener?.subscription.unsubscribe()
+    }
+  }, [supabase])
 
   // Handle submit
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
