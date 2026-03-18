@@ -80,7 +80,7 @@ const LogIn: React.FC<LogInProps> = ({ user, onSwitch }) => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="email@example.com"
-                      className="h-11 bg-momentum-gray-secondary rounded-lg px-4 outline-none border border-transparent focus:border-momentum-primary-purple transition-all"
+                      className="h-11 bg-momentum-gray-secondary text-black rounded-lg px-4 outline-none border border-transparent focus:border-momentum-primary-purple transition-all"
                     />
                   </div>
 
@@ -92,7 +92,7 @@ const LogIn: React.FC<LogInProps> = ({ user, onSwitch }) => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="h-11 bg-momentum-gray-secondary rounded-lg px-4 outline-none border border-transparent focus:border-momentum-primary-purple transition-all"
+                      className="h-11 bg-momentum-gray-secondary text-black rounded-lg px-4 outline-none border border-transparent focus:border-momentum-primary-purple transition-all"
                     />
                   </div>
 
