@@ -1,4 +1,4 @@
-import LogIn from "./LogIn"
+import LogIn from "./components/LogIn"
 import { createSupabaseServerClient  } from "@/lib/supabase/server-client"
 
 export default async function LogInPage() {
