@@ -72,7 +72,7 @@ const LogIn: React.FC<LogInProps> = ({ user }) => {
                 
                 {/* Header */}
                 <div className="mb-8">
-                  <h1 className="text-momentum-black font-bold text-4xl mb-2">Start your transformation today</h1>
+                  <h1 className="text-momentum-black font-bold text-4xl mb-2">Access your dashboard!</h1>
                 </div>
 
                 {/* Provider Button */}
