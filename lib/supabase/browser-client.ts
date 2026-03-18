@@ -21,7 +21,7 @@ export function getSupabaseBrowserClient(): SupabaseClient<SupabaseSchema> {
         )
     }
 
-    client = createBrowserClient<SupabaseSchema>(supabaseUrl, supabaseAnonKey) {
-        return client
-    }
+    client = createBrowserClient<SupabaseSchema>(supabaseUrl, supabaseAnonKey) 
+    return client
+    
 }
