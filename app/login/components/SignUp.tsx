@@ -11,23 +11,36 @@ type SignUpProps = {
 }
 
 const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
-  // Animation state
-  const [isAnimating, setIsAnimating] = useState<boolean>(true)
-  // State
-  const [loggedIn, setLoggedIn] = useState<boolean>(false)
-  // Instantiate browser client
   const supabase = getSupabaseBrowserClient()
-  // Sign up status
-  const [signUpStatus, setSignUpStatus] = useState('')
 
-  // Handle submit
+  // 1. Input State Listeners
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  
+  // Status and Loading states
+  const [signUpStatus, setSignUpStatus] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  // 2. Handle submit
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    // I need to add an if statement to check that both passwords match
+    setSignUpStatus('')
+    
+    // Check if passwords match
+    if (password !== confirmPassword) {
+        setSignUpStatus("Passwords do not match!")
+        return
+    }
+
+    setLoading(true)
+
     const { error, data } = await supabase.auth.signUp({
         email,
         password,
     })
+
+    setLoading(false)
 
     if (error) {
         setSignUpStatus(error.message)
@@ -35,86 +48,84 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
         setSignUpStatus("Check your inbox to confirm your new account!")
     }
   }
+
+  // Determine if button should be active (both fields filled + passwords match)
+  const isFormValid = email.length > 0 && password.length >= 6 && password === confirmPassword
   
   return (
-    <main className={isAnimating ? "overflow-hidden" : ""}>
+    <main className="overflow-hidden">
         <div className="h-screen flex flex-col justify-around items-center bg-linear-to-t from-momentum-primary-purple via-momentum-bg-soft via-90% to-white">
           <section className="w-full flex flex-col justify-between items-center">
-            
-            {/* Merged Sign-up card */}
             <div className="w-11/12 md:w-[450px] bg-momentum-bg-card rounded-2xl shadow-2xl p-8 mt-8 md:mt-0">
               <div className="w-full">
                 
-                {/* Header */}
                 <div className="mb-8">
                   <h1 className="text-momentum-black font-bold text-4xl mb-2">Create your dashboard!</h1>
                 </div>
 
-                {/* Provider Button */}
-                <div className="space-y-3 mb-8 cursor-pointer">
-                  <button className="w-full h-12 px-4 flex justify-center items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group">
-                    <Image src="/Google.png" width={24} height={24} alt="strava" />
-                    <span className="ml-3 font-semibold text-momentum-midnight-indigo">Sign Up in with Google</span>
-                  </button>
-                </div>
-
-                {/* Form Logic */}
-                <form  className="space-y-6"
-                    onSubmit={handleSubmit}
-                >
+                <form className="space-y-6" onSubmit={handleSubmit}>
+                  {/* Email Input */}
                   <div className="flex flex-col">
                     <label className="text-momentum-black-64 font-semibold mb-2 text-sm">E-mail</label>
                     <input 
-                      type="text"
-                      value={''}
-                      placeholder="ie: John"
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="email@example.com"
                       className="h-11 bg-momentum-gray-secondary rounded-lg px-4 outline-none border border-transparent focus:border-momentum-primary-purple transition-all"
                     />
                   </div>
 
+                  {/* Password Input */}
                   <div className="flex flex-col">
                     <label className="text-momentum-black-64 font-semibold mb-2 text-sm">Password</label>
                     <input 
-                      type="text" 
-                      value={''}
-                      placeholder="ie: John"
+                      type="password" 
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="••••••••"
                       className="h-11 bg-momentum-gray-secondary rounded-lg px-4 outline-none border border-transparent focus:border-momentum-primary-purple transition-all"
                     />
                   </div>
 
+                  {/* Repeat Password Input */}
                   <div className="flex flex-col">
                     <label className="text-momentum-black-64 font-semibold mb-2 text-sm">Repeat password</label>
                     <input 
-                      type="text" 
-                      value={''}
-                      placeholder="ie: John"
+                      type="password" 
+                      required
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="••••••••"
                       className="h-11 bg-momentum-gray-secondary rounded-lg px-4 outline-none border border-transparent focus:border-momentum-primary-purple transition-all"
                     />
                   </div>
 
-                  <p className="text-center text-sm text-momentum-black-64 mt-4">
-                    <button 
-                        type="button" 
-                        onClick={onSwitch} 
-                        className="ml-1 text-momentum-primary-purple font-bold hover:underline"
-                    >
+                  <p className="text-center text-sm text-momentum-black-64">
+                    Already have an account?
+                    <button type="button" onClick={onSwitch} className="ml-1 text-momentum-primary-purple font-bold hover:underline">
                         Log In
                     </button>
                   </p>
 
                   <button 
                     type="submit"
-                    className={ loggedIn ? 
+                    disabled={!isFormValid || loading}
+                    className={ isFormValid ? 
                                 "w-full h-12 bg-momentum-primary-purple hover:bg-momentum-primary-indigo-hover text-white font-bold rounded-lg shadow-lg shadow-momentum-primary-purple/20 transition-all active:scale-[0.98] disabled:opacity-70"
-                                        :
+                                :
                                 "w-full h-12 bg-momentum-primary-purple text-white font-bold rounded-lg shadow-lg shadow-momentum-primary-purple/20 transition-all opacity-50 pointer-events-none" }
                     >
-                    Continue to dashboard
+                    {loading ? "Creating account..." : "Continue to dashboard"}
                   </button>
                 </form>
 
                 {signUpStatus && (
-                    <p>{signUpStatus}</p>
+                    <p className={`mt-4 text-center text-sm font-semibold ${signUpStatus.includes('Check') ? 'text-green-600' : 'text-red-500'}`}>
+                        {signUpStatus}
+                    </p>
                 )}
 
               </div>
