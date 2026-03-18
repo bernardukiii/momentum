@@ -1,5 +1,6 @@
 'use client'
 
+import { getSupabaseBrowserClient } from '@/lib/supabase/browser-client'
 import { User } from '@supabase/supabase-js'
 import { useState } from 'react'
 import Image from "next/image"
@@ -14,6 +15,8 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
   const [isAnimating, setIsAnimating] = useState<boolean>(true)
   // State
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
+  // Instantiate browser client
+  const supabase = getSupabaseBrowserClient()
   
   return (
     <main className={isAnimating ? "overflow-hidden" : ""}>
