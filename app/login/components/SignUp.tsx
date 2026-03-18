@@ -17,6 +17,24 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
   // Instantiate browser client
   const supabase = getSupabaseBrowserClient()
+  // Sign up status
+  const [signUpStatus, setSignUpStatus] = useState('')
+
+  // Handle submit
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    // I need to add an if statement to check that both passwords match
+    const { error, data } = await supabase.auth.signUp({
+        email,
+        password,
+    })
+
+    if (error) {
+        setSignUpStatus(error.message)
+    } else {
+        setSignUpStatus("Check your inbox to confirm your new account!")
+    }
+  }
   
   return (
     <main className={isAnimating ? "overflow-hidden" : ""}>
@@ -41,7 +59,9 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
                 </div>
 
                 {/* Form Logic */}
-                <form  className="space-y-6">
+                <form  className="space-y-6"
+                    onSubmit={handleSubmit}
+                >
                   <div className="flex flex-col">
                     <label className="text-momentum-black-64 font-semibold mb-2 text-sm">E-mail</label>
                     <input 
@@ -92,6 +112,11 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
                     Continue to dashboard
                   </button>
                 </form>
+
+                {signUpStatus && (
+                    <p>{signUpStatus}</p>
+                )}
+
               </div>
             </div>
           </section>

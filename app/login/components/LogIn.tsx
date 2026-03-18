@@ -1,6 +1,7 @@
 'use client'
 
 import { User } from '@supabase/supabase-js'
+import { getSupabaseBrowserClient } from '@/lib/supabase/browser-client'
 import { useState } from 'react'
 import Image from "next/image"
 
@@ -14,6 +15,29 @@ const LogIn: React.FC<LogInProps> = ({ user, onSwitch }) => {
   const [isAnimating, setIsAnimating] = useState<boolean>(true)
   // State
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
+
+  // Instantiate browser client
+  const supabase = getSupabaseBrowserClient()
+  // Sign up status
+  const [signInStatus, setSignInStatus] = useState('')
+
+  // Handle submit
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const { error, data } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+    })
+
+    if (error) {
+        setSignInStatus(error.message)
+    } else {
+        setSignInStatus("Signing in!")
+    }
+
+    console.log({ data })
+  }
   
   return (
     <main className={isAnimating ? "overflow-hidden" : ""}>
@@ -38,7 +62,9 @@ const LogIn: React.FC<LogInProps> = ({ user, onSwitch }) => {
                 </div>
 
                 {/* Form Logic */}
-                <form  className="space-y-6">
+                <form  className="space-y-6"
+                    onSubmit={handleSubmit}
+                >
                   <div className="flex flex-col">
                     <label className="text-momentum-black-64 font-semibold mb-2 text-sm">E-mail</label>
                     <input 
@@ -79,6 +105,11 @@ const LogIn: React.FC<LogInProps> = ({ user, onSwitch }) => {
                     Continue to dashboard
                   </button>
                 </form>
+
+                {signInStatus && (
+                  <p>{signInStatus}</p>
+                )}
+
               </div>
             </div>
           </section>
