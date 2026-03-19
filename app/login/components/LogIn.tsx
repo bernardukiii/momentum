@@ -87,7 +87,7 @@ const LogIn: React.FC<LogInProps> = ({ user, onSwitch }) => {
                   <h1 className="text-momentum-black font-bold text-4xl mb-2">Access your dashboard!</h1>
                 </div>
 
-                {/* Google Provider - Note: This requires setup in Supabase dashboard */}
+                {/* Google Provider */}
                 <div className="space-y-3 mb-8 cursor-pointer">
                   <button 
                     type="button"
