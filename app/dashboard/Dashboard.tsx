@@ -36,7 +36,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         </div>
 
         <h1 className="text-momentum-black font-bold text-3xl mb-2">
-          Welcome back!
+          Welcome back {user?.user_metadata?.full_name || 'my friend'}!
         </h1>
         
         <p className="text-momentum-black-64 font-medium mb-8">
