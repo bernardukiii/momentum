@@ -13,6 +13,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const supabase = getSupabaseBrowserClient()
   const router = useRouter()
 
+  // username
+  const displayName = user?.user_metadata?.full_name || user?.email || "Guest";
+  const userInitial = displayName.charAt(0).toUpperCase();
+
   async function handleSignOut() {
     // 1. Tell Supabase to kill the session
     const { error } = await supabase.auth.signOut()
@@ -36,11 +40,11 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         </div>
 
         <h1 className="text-momentum-black font-bold text-3xl mb-2">
-          Welcome back {user?.user_metadata?.full_name || 'my friend'}!
+          Welcome back {displayName}!
         </h1>
         
         <p className="text-momentum-black-64 font-medium mb-8">
-          Logged in as: <span className="text-momentum-primary-purple">{user?.email}</span>
+          Logged in with: <span className="text-momentum-primary-purple">{user?.email}</span>
         </p>
 
         <div className="space-y-4">
