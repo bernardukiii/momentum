@@ -63,6 +63,17 @@ const LogIn: React.FC<LogInProps> = ({ user, onSwitch }) => {
 
   // Logic to enable button
   const canSubmit = email.length > 0 && password.length > 0
+
+  // Handle login with google provider
+  async function handleGoogleSignIn() {
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+        skipBrowserRedirect: false,
+      }
+    })
+  }
   
   return (
     <main className="overflow-hidden">
@@ -76,11 +87,12 @@ const LogIn: React.FC<LogInProps> = ({ user, onSwitch }) => {
                   <h1 className="text-momentum-black font-bold text-4xl mb-2">Access your dashboard!</h1>
                 </div>
 
-                {/* Google Provider - Note: This requires setup in Supabase dashboard */}
+                {/* Google Provider */}
                 <div className="space-y-3 mb-8 cursor-pointer">
                   <button 
                     type="button"
                     className="w-full h-12 px-4 flex justify-center items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
+                    onClick={handleGoogleSignIn}
                   >
                     <Image src="/Google.png" width={24} height={24} alt="google" />
                     <span className="ml-3 font-semibold text-momentum-midnight-indigo">Log in with Google</span>
