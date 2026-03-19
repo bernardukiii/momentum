@@ -14,6 +14,7 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
   const supabase = getSupabaseBrowserClient()
 
   // 1. Input State Listeners
+  const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -67,6 +68,19 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
                 </div>
 
                 <form className="space-y-6" onSubmit={handleSubmit}>
+                  {/* Name Input */}
+                  <div className="flex flex-col">
+                    <label className="text-momentum-black-64 font-semibold mb-2 text-sm">Name or username</label>
+                    <input 
+                      type="email"
+                      required
+                      value={userName}
+                      onChange={(e) => setUserName(e.target.value)}
+                      placeholder="example: John or johnniebravo14"
+                      className="h-11 bg-momentum-gray-secondary text-black rounded-lg px-4 outline-none border border-transparent focus:border-momentum-primary-purple transition-all"
+                    />
+                  </div>
+                  
                   {/* Email Input */}
                   <div className="flex flex-col">
                     <label className="text-momentum-black-64 font-semibold mb-2 text-sm">E-mail</label>
