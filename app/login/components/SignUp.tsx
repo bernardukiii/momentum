@@ -40,6 +40,9 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
         email,
         password,
         options: {
+          data: {
+            full_name: userName,
+          },
           emailRedirectTo: `${window.location.origin}/dashboard`
         }
     })
@@ -72,7 +75,7 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
                   <div className="flex flex-col">
                     <label className="text-momentum-black-64 font-semibold mb-2 text-sm">Name or username</label>
                     <input 
-                      type="email"
+                      type="userName"
                       required
                       value={userName}
                       onChange={(e) => setUserName(e.target.value)}
