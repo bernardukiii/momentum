@@ -43,7 +43,7 @@ const SignUp: React.FC<SignUpProps> = ({ user, onSwitch }) => {
           data: {
             full_name: userName,
           },
-          emailRedirectTo: `${window.location.origin}/dashboard`
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         }
     })
 
