@@ -66,8 +66,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         </section>
 
         {/* CARD SECTION */}
-        <section className="bg-green-50 h-full w-full max-w-[95%] mt-6">
-          hello
+        <section className="w-full max-w-[85%] mt-6 grid grid-cols-2 lg:grid-cols-2 gap-8">
+          
         </section>
 
 
