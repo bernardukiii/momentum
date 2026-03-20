@@ -34,27 +34,43 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   return (
     <main className="w-full min-h-screen bg-linear-to-t from-momentum-primary-purple via-momentum-bg-soft via-90% to-white">
       <MomentumNavBar userName={displayName} handleSignOut={handleSignOut} />
+      
+      <div className="flex flex-col justify-center items-center mt-6">
+        {/* HEADER SECTION - WILL EVENTUALLY CONTAIN SOME INSIGHTS ON THE RIGHT SIDE */}
+        <section className="flex justify-center items-center w-full max-w-[95%] bg-momentum-bg-card rounded-2xl shadow-xl p-8 text-center border border-momentum-gray-primary" >
+          {/* LEFT SIDE - WELCOME AND LOGIN */}
+          <div className="w-full border-r-px">
+            {/* User Avatar / Icon placeholder */}
+            <div className="flex justify-center items-center mb-2">
+              <div className="w-20 h-20 bg-momentum-primary-purple/10 rounded-full flex items-center justify-center mx-4">
+                <span className="text-3xl">👋</span>
+              </div>
 
-      <div className="w-full max-w-md bg-momentum-bg-card rounded-2xl shadow-xl p-8 text-center border border-momentum-gray-primary">
-        {/* User Avatar / Icon placeholder */}
-        <div className="w-20 h-20 bg-momentum-primary-purple/10 rounded-full flex items-center justify-center mx-auto mb-6">
-          <span className="text-3xl">👋</span>
-        </div>
+              <div className="flex justify-center items-center">
+                <h1 className="text-momentum-black font-bold text-3xl mb-2">
+                  Welcome back {displayName}!
+                </h1>
+              </div>
+            </div>
+            
+            <div className="flex flex-col justify-center items-center">
+              <p className="text-momentum-black-64 font-medium mb-8">
+                Logged in with: <span className="text-momentum-primary-purple">{user?.email}</span>
+              </p>
+            </div>
+          </div>
+          {/* RIGHT SIDE - QUICK SNAP INSIGHTS */}
+          <div className="w-full border-l-px text-black">
+            Insights
+          </div>
+        </section>
 
-        <h1 className="text-momentum-black font-bold text-3xl mb-2">
-          Welcome back {displayName}!
-        </h1>
-        
-        <p className="text-momentum-black-64 font-medium mb-8">
-          Logged in with: <span className="text-momentum-primary-purple">{user?.email}</span>
-        </p>
+        {/* CARD SECTION */}
+        <section className="bg-green-50 h-full w-full max-w-[95%] mt-6">
+          hello
+        </section>
 
-        <div className="space-y-4">
-          <div className="p-4 bg-momentum-gray-secondary rounded-lg text-left">
-            <p className="text-xs font-bold text-momentum-black-64 uppercase tracking-wider mb-1">Status</p>
-            <p className="text-momentum-midnight-indigo font-semibold">Active Session</p>
-          </div> 
-        </div>
+
       </div>
     </main>
   )
