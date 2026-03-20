@@ -18,9 +18,9 @@ const MomentumNavBar: React.FC<MomentumNavBarProps> = ({ userName, handleSignOut
       {/* Logo Section */}
       <div className="flex items-center">
         <Image
-          src="/logo.png" // Ensure this points to your actual logo path
-          height={30}
-          width={120}
+          src="/momentum-white-cropped.png" // Ensure this points to your actual logo path
+          height={50}
+          width={200}
           alt="momentum-logo"
           className="object-contain"
           priority
