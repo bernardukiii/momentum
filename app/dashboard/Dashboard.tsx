@@ -23,6 +23,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   //// Strava auth to start getting activities ////
   // Handle window
   const handleStravaAuth = () => {
+    if (!user) return alert("Please log in first"); // Safety guard just in case
+    
     const width = 500
     const height = 600
     const left = window.screenX + (window.outerWidth - width) / 2
