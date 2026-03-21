@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { getSupabaseBrowserClient } from '@/lib/supabase/browser-client'
 
 export async function syncStravaActivities(accessToken: string, userId: string) {
   // Fetch from Strava
@@ -25,7 +25,7 @@ export async function syncStravaActivities(accessToken: string, userId: string) 
   }))
 
   // Upsert to Supabase preventing duplicates
-  const { error } = await supabase
+  const { error } = await getSupabaseBrowserClient()
     .from('activities')
     .upsert(formattedActivities, { onConflict: 'id' })
 
