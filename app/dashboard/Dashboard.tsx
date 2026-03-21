@@ -4,6 +4,7 @@ import React from "react"
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client"
 import { User } from "@supabase/supabase-js"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import MomentumNavBar from "./components/MomentumNavBar"
 import MomentumCard from "./components/MomentumCard"
 import StravaSummary from "./components/strava/StravaSummary"
@@ -63,8 +64,25 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
             </div>
           </div>
           {/* RIGHT SIDE - QUICK SNAP INSIGHTS */}
-          <div className="w-full border-l-px text-black">
-            Insights
+          <div className="w-full flex justify-between items-center border-l-px text-black">
+            {/* STRAVA */}
+            <div className="w-full">
+              {/* Google Provider */}
+                              <div className="space-y-3 mb-8 cursor-pointer">
+                                <button 
+                                  type="button"
+                                  className="w-full h-12 px-4 flex justify-center items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
+                                  // onClick={}
+                                >
+                                  <Image src="/strava-logo.svg" width={24} height={24} alt="strava-icon" />
+                                  <span className="ml-3 font-semibold text-momentum-midnight-indigo">Get Strava data</span>
+                                </button>
+                              </div>
+            </div>
+            {/* COFFE INTAKE COUNTER MAYBE */}
+            <div className="w-full">
+              COFFEE TRACKER MAYBE
+            </div>
           </div>
         </section>
 
