@@ -6,6 +6,7 @@ import { User } from "@supabase/supabase-js"
 import { useRouter } from "next/navigation"
 import MomentumNavBar from "./components/MomentumNavBar"
 import MomentumCard from "./components/MomentumCard"
+import StravaSummary from "./components/strava/StravaSummary"
 
 
 type DashboardProps = {
@@ -69,7 +70,9 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
         {/* CARD SECTION */}
         <section className="w-full max-w-[85%] mt-6 grid grid-cols-2 lg:grid-cols-2 gap-8">
-          <MomentumCard title="Strava" icon={'/strava-logo.svg'} />
+          <MomentumCard title="Strava" icon={'/strava-logo.svg'}>
+            <StravaSummary />
+          </MomentumCard>
         </section>
 
 
