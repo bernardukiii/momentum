@@ -68,8 +68,9 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
           router.refresh()
           
           console.log("Sync Complete!")
-        } catch (err) {
+        } catch (err: any) {
           console.error("Exchange or Sync failed:", err)
+          console.error("Detailed Sync Error:", err.message || err);
         }
       }
     }
