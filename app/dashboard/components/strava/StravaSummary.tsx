@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { MomentumToggle } from '../../../../lib/components/MomentumToggle'
+import { MomentumToggle } from '../../../../components/momentum/MomentumToggle'
 
 interface StravaSummaryProps {
   distance: number

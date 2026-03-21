@@ -6,8 +6,8 @@ import { syncStravaActivities } from "@/lib/strava/syncActivities"
 import { User } from "@supabase/supabase-js"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import MomentumNavBar from "../../lib/components/MomentumNavBar"
-import MomentumCard from "../../lib/components/MomentumCard"
+import MomentumNavBar from "../../components/momentum/MomentumNavBar"
+import MomentumCard from "../../components/momentum/MomentumCard"
 import StravaSummary from "./components/strava/StravaSummary"
 
 
