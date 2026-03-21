@@ -2,6 +2,7 @@
 
 import React from "react"
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client"
+import { syncStravaActivities } from "@/lib/strava/syncActivities"
 import { User } from "@supabase/supabase-js"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
@@ -13,6 +14,40 @@ import StravaSummary from "./components/strava/StravaSummary"
 type DashboardProps = {
   user: User | null
 }
+
+//// Strava auth to start getting activities ////
+  // Handle window
+  const handleStravaAuth = () => {
+    const width = 500
+    const height = 600
+    const left = window.screenX + (window.outerWidth - width) / 2
+    const top = window.screenY + (window.outerHeight - height) / 2
+
+    const STRAVA_AUTH_URL = `https://www.strava.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_STRAVA_REDIRECT_URI}&response_type=code&scope=read,activity:read_all`
+
+    // Open the popup
+    const popup = window.open(
+      STRAVA_AUTH_URL,
+      "Strava Login",
+      `width=${width},height=${height},top=${top},left=${left}`
+    )
+
+    // Listen for the "success" message from the popup
+    const receiveMessage = (event: MessageEvent) => {
+      // SECURITY: Ensure the message comes from your own domain
+      if (event.origin !== window.location.origin) return
+
+      if (event.data.type === "STRAVA_AUTH_SUCCESS") {
+          console.log("Authenticated!", event.data.code)
+          syncStravaActivities()
+          // Clean up
+          window.removeEventListener("message", receiveMessage)
+          popup?.close()
+        }
+      }
+
+    window.addEventListener("message", receiveMessage)
+  }
 
 const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const supabase = getSupabaseBrowserClient()
@@ -71,11 +106,11 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                               <div className="space-y-3 mb-8 cursor-pointer">
                                 <button 
                                   type="button"
-                                  className="w-full h-12 px-4 flex justify-center items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
-                                  // onClick={}
+                                  className="w-3/4 h-12 px-4 flex justify-center pointer-events-auto items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
+                                  onClick={handleStravaAuth}
                                 >
                                   <Image src="/strava-logo.svg" width={24} height={24} alt="strava-icon" />
-                                  <span className="ml-3 font-semibold text-momentum-midnight-indigo">Get Strava data</span>
+                                  <span className="ml-3 font-semibold text-momentum-midnight-indigo">Get Strava activities</span>
                                 </button>
                               </div>
             </div>
