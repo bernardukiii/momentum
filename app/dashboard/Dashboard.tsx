@@ -15,7 +15,12 @@ type DashboardProps = {
   user: User | null
 }
 
-//// Strava auth to start getting activities ////
+
+const Dashboard: React.FC<DashboardProps> = ({ user }) => {
+  const supabase = getSupabaseBrowserClient()
+  const router = useRouter()
+
+  //// Strava auth to start getting activities ////
   // Handle window
   const handleStravaAuth = () => {
     const width = 500
@@ -33,25 +38,42 @@ type DashboardProps = {
     )
 
     // Listen for the "success" message from the popup
-    const receiveMessage = (event: MessageEvent) => {
-      // SECURITY: Ensure the message comes from your own domain
+    const receiveMessage = async (event: MessageEvent) => {
       if (event.origin !== window.location.origin) return
 
       if (event.data.type === "STRAVA_AUTH_SUCCESS") {
-          console.log("Authenticated!", event.data.code)
-          syncStravaActivities()
-          // Clean up
-          window.removeEventListener("message", receiveMessage)
-          popup?.close()
+        const code = event.data.code
+        
+        // Clean up window/listener first
+        window.removeEventListener("message", receiveMessage)
+        popup?.close()
+
+        try {
+          // 1. Exchange the code for the real Access Token
+          const res = await fetch('/api/strava/exchange', {
+            method: 'POST',
+            body: JSON.stringify({ code })
+          })
+          const { accessToken } = await res.json()
+
+          if (!accessToken) throw new Error("No access token received")
+
+          // 2. sync the activities with the actual token
+          // userId comes from your props: user.id
+          await syncStravaActivities(accessToken, user!.id)
+          
+          // 3. Refresh the UI so the StravaSummary card shows the new data
+          router.refresh()
+          
+          console.log("Sync Complete!")
+        } catch (err) {
+          console.error("Exchange or Sync failed:", err)
         }
       }
+    }
 
     window.addEventListener("message", receiveMessage)
   }
-
-const Dashboard: React.FC<DashboardProps> = ({ user }) => {
-  const supabase = getSupabaseBrowserClient()
-  const router = useRouter()
 
   // username
   const displayName = user?.user_metadata?.full_name || user?.email || "Guest";
