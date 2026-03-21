@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Image from 'next/image'
+import { MomentumToggle } from '../MomentumToggle'
 
 interface StravaSummaryProps {
   distance: number
@@ -15,15 +16,7 @@ const StravaSummary: React.FC<StravaSummaryProps> = ({ distance, unit, activitie
         <h1>Insight summary</h1>
         {/* Toggle switch */}
         <div className='w-full flex justify-end items-center'>
-            <div className='flex justify-between items-center w-24 bg-red-50'>
-                <button className='flex justify-center items-center w-full bg-gray-200 rounded-xl'>
-                    <Image src={'/bike-icon.svg'} width={20} height={20} alt="icon" />
-                </button>
-
-                <button className='flex justify-center items-center w-full bg-gray-200 rounded-xl'>
-                    <Image src={'/runner-icon.svg'} width={20} height={20} alt="icon" />
-                </button>
-            </div>
+            <MomentumToggle />
         </div>
     </div>
   )
