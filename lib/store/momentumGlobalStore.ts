@@ -16,7 +16,7 @@ interface ActivityState {
   setActivities: (data: Activity[]) => void;
 }
 
-export const useActivityStore = create<ActivityState>((set) => ({
+export const useMomentumGlobalStore = create<ActivityState>((set) => ({
   activities: [],
   isLoaded: false,
   setActivities: (data) => set({ activities: data, isLoaded: true }),
