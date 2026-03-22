@@ -15,6 +15,7 @@ import {
 // component imports
 import Image from 'next/image'
 import { MomentumToggle } from '../../../../components/momentum/MomentumToggle'
+import ActivitySnippet from './ActivitySnippet'
 
 
 const StravaSummary: React.FC = ({ }) => {
@@ -51,82 +52,7 @@ const StravaSummary: React.FC = ({ }) => {
             {/* RIGHT SIDE */}
             <div className='w-full h-full bg-red-50 flex justify-center items-center'>
               <section className='w-full flex flex-col justify-center items-center'>
-                {/* BIKE */}
-                <div className='flex flex-col justify-center items-center'>
-                  <h3 className='text-black text-lg underline font-bold' >Bike rides</h3>
-                  <div className='flex justify-between items-center w-full'>
-                    <h4 className='font-semibold'>Weekly km's</h4>
-                    <span>{weeklyKmBike}</span>
-                  </div>
-
-                  <div className='flex justify-between items-center w-full'>
-                    <h4 className='font-semibold'>Weekly time spent</h4>
-                    <span>{weeklyMinsBike}</span>
-                  </div>
-
-                  <div className='flex justify-between items-center w-full'>
-                    <h4 className='font-semibold'>Weekly calories burnt</h4>
-                    <span>{weeklyCalsBike}</span>
-                  </div>
-                </div>
-
-                {/* Run */}
-                <div className='flex flex-col justify-center items-center'>
-                  <h3 className='text-black text-lg underline font-bold' >Runs</h3>
-                  <div className='flex justify-between items-center w-full'>
-                    <h4 className='font-semibold'>Weekly km's</h4>
-                    <span>{weeklyKmRun}</span>
-                  </div>
-
-                  <div className='flex justify-between items-center w-full'>
-                    <h4 className='font-semibold'>Weekly time spent</h4>
-                    <span>{weeklyMinsRun}</span>
-                  </div>
-
-                  <div className='flex justify-between items-center w-full'>
-                    <h4 className='font-semibold'>Weekly calories burnt</h4>
-                    <span>{weeklyCalsRun}</span>
-                  </div>
-                </div>
-
-                {/* Walk */}
-                <div className='flex flex-col justify-center items-center'>
-                  <h3 className='text-black text-lg underline font-bold' >Walks</h3>
-                  <div className='flex justify-between items-center w-full'>
-                    <h4 className='font-semibold'>Weekly km's</h4>
-                    <span>{weeklyKmWalk}</span>
-                  </div>
-
-                  <div className='flex justify-between items-center w-full'>
-                    <h4 className='font-semibold'>Weekly time spent</h4>
-                    <span>{weeklyMinsWalk}</span>
-                  </div>
-
-                  <div className='flex justify-between items-center w-full'>
-                    <h4 className='font-semibold'>Weekly calories burnt</h4>
-                    <span>{weeklyCalsWalk}</span>
-                  </div>
-                </div>
-                
-
-                {/* Total */}
-                <div className='flex flex-col justify-center items-center'>
-                  <h3 className='text-black text-lg underline font-bold' >Total</h3>
-                  <div className='flex justify-between items-center w-full'>
-                    <h4 className='font-semibold'>Weekly km's</h4>
-                    <span>{weeklyKmTotal}</span>
-                  </div>
-
-                  <div className='flex justify-between items-center w-full'>
-                    <h4 className='font-semibold'>Weekly time spent</h4>
-                    <span>{weeklyMinsTotal}</span>
-                  </div>
-
-                  <div className='flex justify-between items-center w-full'>
-                    <h4 className='font-semibold'>Weekly calories burnt</h4>
-                    <span>{weeklyCalsTotal}</span>
-                  </div>
-                </div>
+                <ActivitySnippet />
               </section>
             </div>
         </section>
