@@ -1,16 +1,21 @@
 'use client'
 
 import React from 'react'
+
+// zustand store
+import { useMomentumGlobalStore } from '@/lib/store/momentumGlobalStore'
+// component imports
 import Image from 'next/image'
 import { MomentumToggle } from '../../../../components/momentum/MomentumToggle'
 
-interface StravaSummaryProps {
-  distance: number
-  unit: 'km' | 'mi'
-  activitiesThisWeek: number
-}
 
-const StravaSummary: React.FC<StravaSummaryProps> = ({ distance, unit, activitiesThisWeek }) => {
+const StravaSummary: React.FC = ({ }) => {
+  const activities = useMomentumGlobalStore((state) => state.activities)
+  
+
+
+
+
   return (
     <div className="flex flex-col justify-center items-center h-full space-y-3 text-black">
         <h1 className='text-lg font-bold text-black'>Insight summary</h1>
