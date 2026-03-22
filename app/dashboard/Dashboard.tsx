@@ -1,10 +1,15 @@
 'use client'
 
-import React from "react"
+// react + nextjs imports
+import React, { useEffect } from "react"
+import { useRouter } from "next/navigation"
+// supabase + strava imports
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client"
 import { syncStravaActivities } from "@/lib/strava/syncActivities"
 import { User } from "@supabase/supabase-js"
-import { useRouter } from "next/navigation"
+// importing store
+import { useMomentumGlobalStore } from "@/lib/store/momentumGlobalStore"
+// component imports
 import Image from "next/image"
 import MomentumNavBar from "../../components/momentum/MomentumNavBar"
 import MomentumCard from "../../components/momentum/MomentumCard"
@@ -19,6 +24,10 @@ type DashboardProps = {
 const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const supabase = getSupabaseBrowserClient()
   const router = useRouter()
+  // setting store
+  const setActivities = useMomentumGlobalStore((state) => state.setActivities)
+  // Adding loading state
+  const isLoaded = useMomentumGlobalStore((state) => state.isLoaded)
 
   //// Strava auth to start getting activities ////
   // Handle window
@@ -94,6 +103,34 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
       console.error("Error signing out:", error.message)
     }
   }
+
+  // useEffect to hydrate with zustand store
+  useEffect(() => {
+    // 1. Define the fetcher
+    const fetchUserActivities = async () => {
+      if (!user?.id) return
+
+      const { data, error } = await supabase
+        .from('activities')
+        .select('*')
+        .order('start_date', { ascending: false })
+
+      if (error) {
+        console.error("Error hydration store:", error.message)
+        return
+      }
+
+      // 2. Fill Zustand 
+      if (data) {
+        setActivities(data)
+      }
+    }
+
+    // 3. Only fetch if we haven't loaded yet this session
+    if (!isLoaded && user) {
+      fetchUserActivities()
+    }
+  }, [user, isLoaded, setActivities, supabase])
 
   return (
     <main className="w-full min-h-screen bg-linear-to-t from-momentum-primary-purple via-momentum-bg-soft via-90% to-white">
