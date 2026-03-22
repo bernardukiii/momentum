@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 
-// Define exactly what an Activity looks like based on your Supabase table
 interface Activity {
   id: number;
   name: string;
@@ -13,26 +12,12 @@ interface Activity {
 
 interface ActivityState {
   activities: Activity[];
-  isSyncing: boolean;
-  // Actions
+  isLoaded: boolean; // Useful to show a skeleton loader
   setActivities: (data: Activity[]) => void;
-  setSyncing: (status: boolean) => void;
-  // Helper: Get today's total calories
-  getTodayCalories: () => number;
 }
 
-export const useActivityStore = create<ActivityState>((set, get) => ({
+export const useActivityStore = create<ActivityState>((set) => ({
   activities: [],
-  isSyncing: false,
-  
-  setActivities: (data) => set({ activities: data }),
-  
-  setSyncing: (status) => set({ isSyncing: status }),
-
-  getTodayCalories: () => {
-    const today = new Date().toISOString().split('T')[0];
-    return get().activities
-      .filter(a => a.start_date.startsWith(today))
-      .reduce((sum, a) => sum + (a.calories || 0), 0);
-  }
+  isLoaded: false,
+  setActivities: (data) => set({ activities: data, isLoaded: true }),
 }))
