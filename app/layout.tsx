@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Providers } from './providers' // Path to your providers file
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,10 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* Everything inside Providers has access to the Chakra context */}
-        <Providers>
           {children}
-        </Providers>
       </body>
     </html>
   );
