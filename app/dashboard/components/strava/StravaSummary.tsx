@@ -44,7 +44,7 @@ const StravaSummary: React.FC = () => {
 
         <section className='w-full h-full flex justify-center items-center'>
             <div className='w-full h-full bg-green-50 flex justify-center items-center'>Mini line chart</div>
-            <div className='w-full h-full bg-red-50 flex justify-center items-center'>
+            <div className='w-full h-full border-2 flex justify-center items-center'>
               <section className='w-full flex flex-col justify-center items-center'>
                 {/* 4. PASS THE DYNAMIC PROPS */}
                 <ActivitySnippet 
