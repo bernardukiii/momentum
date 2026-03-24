@@ -133,7 +133,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   }, [user, isLoaded, setActivities, supabase])
 
   return (
-    <main className="w-full min-h-screen bg-linear-to-t from-momentum-primary-purple via-momentum-bg-soft via-90% to-white">
+    <main className="w-full min-h-screen bg-linear-to-t from-momentum-primary-purple-light via-momentum-bg-soft via-80% to-white">
       <MomentumNavBar userName={displayName} handleSignOut={handleSignOut} />
       
       <div className="flex flex-col justify-center items-center mt-6">
