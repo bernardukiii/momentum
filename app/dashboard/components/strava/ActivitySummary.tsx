@@ -14,7 +14,7 @@ import { MomentumToggle } from '../../../../components/momentum/MomentumToggle'
 import ActivitySnippet from './ActivitySnippet'
 import { MomentumChart } from '@/components/momentum/MomentumChart'
 
-const StravaSummary: React.FC = () => {
+const ActivitySummary: React.FC = () => {
   const activities = useMomentumGlobalStore((state) => state.activities)
   
   // 1. ADD STATE: Which view are we looking at? Default to 'Ride'
@@ -70,4 +70,4 @@ const StravaSummary: React.FC = () => {
   )
 }
 
-export default StravaSummary
+export default ActivitySummary

@@ -13,7 +13,7 @@ import { useMomentumGlobalStore } from "@/lib/store/momentumGlobalStore"
 import Image from "next/image"
 import MomentumNavBar from "../../components/momentum/MomentumNavBar"
 import MomentumCard from "../../components/momentum/MomentumCard"
-import StravaSummary from "./components/strava/StravaSummary"
+import ActivitySummary from "./components/strava/ActivitySummary"
 
 
 type DashboardProps = {
@@ -73,7 +73,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
           // userId comes from your props: user.id
           await syncStravaActivities(accessToken, user!.id)
           
-          // 3. Refresh the UI so the StravaSummary card shows the new data
+          // 3. Refresh the UI so the ActivitySummary card shows the new data
           router.refresh()
           
           console.log("Sync Complete!")
@@ -186,7 +186,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         {/* CARD SECTION */}
         <section className="w-full max-w-[85%] mt-6 grid grid-cols-2 lg:grid-cols-2 gap-8">
           <MomentumCard title="Strava" icon={'/strava-logo.svg'}>
-            <StravaSummary />
+            <ActivitySummary />
           </MomentumCard>
         </section>
 
