@@ -185,7 +185,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
         {/* CARD SECTION */}
         <section className="w-full max-w-[85%] mt-6 grid grid-cols-2 lg:grid-cols-2 gap-8">
-          <MomentumCard title="Strava" icon={'/strava-logo.svg'}>
+          <MomentumCard title="STRAVA ACTIVITIES' INSIGHTS" icon={'/strava-logo.svg'}>
             <ActivitySummary />
           </MomentumCard>
         </section>
