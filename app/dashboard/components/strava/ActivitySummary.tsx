@@ -38,7 +38,7 @@ const ActivitySummary: React.FC = () => {
   const chartColor = activeType === 'Ride' ? '#f56523' : activeType === 'Run' ? '#3b82f6' : '#10b981'
 
   return (
-    <div className="flex flex-col justify-center items-center h-full space-y-3 text-black">        
+    <div className="flex flex-col justify-center items-center h-full space-y-3 text-black p-4">        
         <div className='w-full flex justify-end items-center'>
             {/* 3. UPDATE TOGGLE: Pass the state and setter to your toggle */}
             {/* Note: Ensure your MomentumToggle component accepts these props! */}
