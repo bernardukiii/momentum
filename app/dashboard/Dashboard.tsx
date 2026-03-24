@@ -172,7 +172,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                   onClick={handleStravaAuth}
                                 >
                                   <Image src="/strava-logo.svg" width={24} height={24} alt="strava-icon" />
-                                  <span className="ml-3 font-semibold text-momentum-midnight-indigo">Get Strava activities</span>
+                                  <span className="ml-3 font-semibold text-momentum-midnight-indigo">Get/Update Strava activities</span>
                                 </button>
                               </div>
             </div>
