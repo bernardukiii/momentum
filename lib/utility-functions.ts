@@ -37,3 +37,29 @@ export const calculateWeeklyTotalTime = (activities: any[], type: ActivityType =
   const totalSeconds = filtered.reduce((sum, a) => sum + (a.moving_time || 0), 0)
   return Math.round(totalSeconds / 60)
 }
+
+// CHART SPECIFIC FUNCTION
+// Ensures that if there is no activity for a day, it returns 0 instead of null
+import { format, subDays, isSameDay } from 'date-fns'
+
+export const getRollingSevenDayData = (activities: any[], type: string) => {
+  // 1. Generate array of last 7 days
+  const last7Days = Array.from({ length: 7 }, (_, i) => {
+    return subDays(new Date(), i)
+  }).reverse()
+
+  // 2. Map activities to these days
+  return last7Days.map((date) => {
+    const dayName = format(date, 'EEE') // "Mon", "Tue", etc.
+    
+    // Sum distance for this specific day and activity type
+    const dayTotal = activities
+      .filter((a) => a.type === type && isSameDay(new Date(a.start_date), date))
+      .reduce((sum, a) => sum + (a.distance / 1000), 0); // Convert meters to km
+
+    return {
+      day: dayName,
+      distance: parseFloat(dayTotal.toFixed(2)),
+    }
+  })
+}
