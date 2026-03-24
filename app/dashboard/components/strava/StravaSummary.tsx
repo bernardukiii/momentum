@@ -2,14 +2,17 @@
 
 import React, { useState } from 'react'
 import { useMomentumGlobalStore } from '@/lib/store/momentumGlobalStore'
+// Utility functions imports
 import { 
   calculateWeeklyTotalDistance, 
   calculateWeeklyTotalTime, 
-  calculateWeeklyAvgCalories 
+  calculateWeeklyAvgCalories,
+  getRollingSevenDayData
 } from '@/lib/utility-functions'
-
+// Component imports
 import { MomentumToggle } from '../../../../components/momentum/MomentumToggle'
 import ActivitySnippet from './ActivitySnippet'
+import { MomentumChart } from '@/components/momentum/MomentumChart'
 
 const StravaSummary: React.FC = () => {
   const activities = useMomentumGlobalStore((state) => state.activities)
@@ -29,6 +32,11 @@ const StravaSummary: React.FC = () => {
   const currentTime = calculateWeeklyTotalTime(activities, activeType).toString()
   const currentCals = calculateWeeklyAvgCalories(activities, activeType).toString()
 
+  // Pass data through utility function to transform it and prepare it for the chart
+  const chartData = getRollingSevenDayData(activities, activeType)
+  // Define dynamic color based on activity type
+  const chartColor = activeType === 'Ride' ? '#f56523' : activeType === 'Run' ? '#3b82f6' : '#10b981'
+
   return (
     <div className="flex flex-col justify-center items-center h-full space-y-3 text-black">
         <h1 className='text-lg font-bold text-black'>Insight summary</h1>
@@ -43,7 +51,9 @@ const StravaSummary: React.FC = () => {
         </div>
 
         <section className='w-full h-full flex justify-center items-center'>
-            <div className='w-full h-full bg-green-50 flex justify-center items-center'>Mini line chart</div>
+            <div className='w-full h-full flex justify-center items-center'>
+              <MomentumChart data={chartData} color={chartColor} />
+            </div>
             <div className='w-full h-full border-2 flex justify-center items-center'>
               <section className='w-full flex flex-col justify-center items-center'>
                 {/* 4. PASS THE DYNAMIC PROPS */}
