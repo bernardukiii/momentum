@@ -27,18 +27,6 @@ const MomentumCard: React.FC<MomentumCardProps> = ({ title, icon, onExpand, chil
       <div className="flex-1 px-5 py-2 overflow-hidden">
         {children}
       </div>
-
-      {/* Footer*/}
-      <footer className='flex justify-end items-center'>
-        <div className='w-full flex justify-end items-center'>
-            <button 
-                onClick={onExpand}
-                className="pointer-cursor w-1/4 p-4 m-2 rounded-lg text-[10px] font-bold text-center border-t border-gray-50 bg-momentum-primary-purple hover:bg-momentum-primary-purple hover:text-white transition-colors uppercase tracking-widest"
-            >
-                See more
-            </button>
-        </div>
-      </footer>
     </div>
   )
 }
