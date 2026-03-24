@@ -4,9 +4,11 @@ import { Line, LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from "rec
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
 interface MomentumChartProps {
-  data: { label: string; value: number }[],
-  dataKey: string, // Tells the chart which property to plot (e.g., "distance" or "calories")
-  color?: string,
+  // Using 'any' record here so it accepts any object shape
+  data: Record<string, any>[]; 
+  dataKey: string;   // e.g., "distance" or "calories"
+  labelKey: string;  // e.g., "day" or "date"
+  color?: string;
 }
 
 export function MomentumChart({ data, color = "#f56523" }: MomentumChartProps) {
