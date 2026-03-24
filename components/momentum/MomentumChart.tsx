@@ -23,7 +23,7 @@ export function MomentumChart({ data, color = "#f56523" }: MomentumChartProps) {
             dataKey="day" 
             axisLine={false} 
             tickLine={false} 
-            tick={{ fontSize: 12, fill: '#9ca3af' }}
+            tick={{ fontSize: 12, fill: '#00000099' }}
           />
           <ChartTooltip content={<ChartTooltipContent hideLabel />} />
           <Line

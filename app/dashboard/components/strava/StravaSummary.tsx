@@ -51,7 +51,7 @@ const StravaSummary: React.FC = () => {
         </div>
 
         <section className='w-full h-full flex justify-center items-center'>
-            <div className='w-full h-full flex justify-center items-center'>
+            <div className='w-full h-full flex justify-center items-center border-2'>
               <MomentumChart data={chartData} color={chartColor} />
             </div>
             <div className='w-full h-full border-2 flex justify-center items-center'>
