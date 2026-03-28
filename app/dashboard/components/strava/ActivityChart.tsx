@@ -14,7 +14,7 @@ import { MomentumToggle } from '../../../../components/momentum/MomentumToggle'
 import ActivitySnippet from './ActivitySnippet'
 import { MomentumChart } from '@/components/momentum/MomentumChart'
 
-const ActivitySummary: React.FC = () => {
+const ActivityChart: React.FC = () => {
   const activities = useMomentumGlobalStore((state) => state.activities)
   
   // 1. ADD STATE: Which view are we looking at? Default to 'Ride'
@@ -48,7 +48,7 @@ const ActivitySummary: React.FC = () => {
             />
         </div>
 
-        <section className='w-full h flex justify-center items-center'>
+        <section className='w-full h-full flex justify-center items-center'>
             <div className='w-full h-full flex justify-center items-center'>
               <MomentumChart data={chartData} color={chartColor} />
             </div>
@@ -57,4 +57,4 @@ const ActivitySummary: React.FC = () => {
   )
 }
 
-export default ActivitySummary
+export default ActivityChart

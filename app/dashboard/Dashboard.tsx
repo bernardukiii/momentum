@@ -13,7 +13,7 @@ import { useMomentumGlobalStore } from "@/lib/store/momentumGlobalStore"
 import Image from "next/image"
 import MomentumNavBar from "../../components/momentum/MomentumNavBar"
 import MomentumCard from "../../components/momentum/MomentumCard"
-import ActivitySummary from "./components/strava/ActivitySummary"
+import ActivitySummary from "./components/strava/ActivityChart"
 
 
 type DashboardProps = {
@@ -191,7 +191,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
         {/* CARD SECTION */}
         <section className="w-full max-w-[85%] mt-6 grid grid-cols-2 lg:grid-cols-2 gap-8">
-          <MomentumCard title="STRAVA ACTIVITIES' INSIGHTS" icon={'/strava-logo.svg'}>
+          <MomentumCard title="Activity chart" icon={'/strava-logo.svg'}>
             <ActivitySummary />
           </MomentumCard>
         </section>
