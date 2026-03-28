@@ -50,9 +50,16 @@ const ActivityNumbers: React.FC = () => {
   return (
     <div className="flex flex-col w-[300px] h-[300px]">        
         <div className='mb-6'>
-            <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+            <h4 className="text-md font-bold text-slate-400 uppercase tracking-[0.2em]">
               Weekly Activity Count
             </h4>
+        </div>
+
+        <div className='flex flex-col justify-center items-start w-3/4'>
+            <div className='flex justify-center items-center'>
+                <label className='mr-2 uppercase text-sm'>Total activities:</label>
+                <span>20</span>
+            </div>
         </div>
 
         <div className="flex-1 w-full min-h-[180px]">
