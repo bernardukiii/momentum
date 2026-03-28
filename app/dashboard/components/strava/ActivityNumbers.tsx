@@ -1,52 +1,99 @@
 'use client'
 
-import React, { useState } from 'react'
+import React  from 'react'
 import { useMomentumGlobalStore } from '@/lib/store/momentumGlobalStore'
-// Utility functions imports
 import { 
   calculateWeeklyTotalDistance, 
   calculateWeeklyTotalTime, 
-  calculateWeeklyAvgCalories,
-  getRollingSevenDayData
+  calculateWeeklyAvgCalories 
 } from '@/lib/utility-functions'
-// Component imports
-import { MomentumToggle } from '../../../../components/momentum/MomentumToggle'
+import { BarChart, Bar, XAxis, YAxis, Cell, ResponsiveContainer, LabelList } from 'recharts'
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
 const ActivityNumbers: React.FC = () => {
   const activities = useMomentumGlobalStore((state) => state.activities)
-  
-  // 1. ADD STATE: Which view are we looking at? Default to 'Ride'
-  const [activeType, setActiveType] = useState<'Ride' | 'Run' | 'Walk'>('Ride')
 
-  // Use a map for the display titles
-  const titleMap = {
-    Ride: "Weekly biking",
-    Run: "Weekly running",
-    Walk: "Weekly walking"
+  const data = [
+    { 
+        type: 'Ride', 
+        count: activities.filter(a => a.type === 'Ride').length, 
+        km: calculateWeeklyTotalDistance(activities, 'Ride'), 
+        time: calculateWeeklyTotalTime(activities, 'Ride'), 
+        calories: calculateWeeklyAvgCalories(activities, 'Ride'),
+        fill: '#f56523' 
+    },
+    { 
+        type: 'Run', 
+        count: activities.filter(a => a.type === 'Run').length,
+        km: calculateWeeklyTotalDistance(activities, 'Run'), 
+        time: calculateWeeklyTotalTime(activities, 'Run'), 
+        calories: calculateWeeklyAvgCalories(activities, 'Run'),
+        fill: '#3b82f6' 
+    },
+    { 
+        type: 'Walk', 
+        count: activities.filter(a => a.type === 'Walk').length,
+        km: calculateWeeklyTotalDistance(activities, 'Walk'), 
+        time: calculateWeeklyTotalTime(activities, 'Walk'), 
+        calories: calculateWeeklyAvgCalories(activities, 'Walk'),
+        fill: '#10b981' 
+    },
+  ]
+
+  const chartConfig = {
+    count: { label: "Weekly acts", color: "#64748b" },
+    km: { label: "Weekly Km's", color: "#64748b" },
+    time: { label: "Weekly time", color: "#64748b" },
+    calories: { label: "Weekly calories", color: "#64748b" }
   }
 
-  // 2. CALCULATE DYNAMICALLY based on activeType
-  const currentKm = calculateWeeklyTotalDistance(activities, activeType).toString()
-  const currentTime = calculateWeeklyTotalTime(activities, activeType).toString()
-  const currentCals = calculateWeeklyAvgCalories(activities, activeType).toString()
-
-
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full space-y-3 text-black p-4">        
-        <div className='w-full h-full flex justify-end items-center'>
-            {/* 3. UPDATE TOGGLE: Pass the state and setter to your toggle */}
-            {/* Note: Ensure your MomentumToggle component accepts these props! */}
-            <MomentumToggle 
-              activeType={activeType} 
-              onTypeChange={(val) => setActiveType(val)} 
-            />
+    <div className="flex flex-col w-[300px] h-[300px]">        
+        <div className='mb-6'>
+            <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+              Weekly Activity Count
+            </h4>
         </div>
 
-        <section className='w-full h-full flex justify-center items-center'>
-            <div className='w-full h-full flex justify-center items-center'>
-              
-            </div>
-        </section>
+        <div className="flex-1 w-full min-h-[180px]">
+          <ChartContainer config={chartConfig} className="h-full w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data} margin={{ top: 30, right: 0, left: -35, bottom: 0 }}>
+                <XAxis 
+                  dataKey="type" 
+                  axisLine={false} 
+                  tickLine={false} 
+                  tick={{ fontSize: 11, fontWeight: 700, fill: '#64748b' }} 
+                />
+                <YAxis hide />
+                
+                <ChartTooltip 
+                  cursor={{ fill: 'rgba(0,0,0,0.04)', radius: 8 }}
+                  content={<ChartTooltipContent indicator="line" />} 
+                />
+
+                {/* THE VISIBLE BAR */}
+                <Bar dataKey="count" radius={[10, 10, 10, 10]} barSize={40}>
+                  <LabelList 
+                    dataKey="count" 
+                    position="top" 
+                    offset={12}
+                    className="fill-slate-900 font-black text-sm"
+                  />
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Bar>
+
+                {/* THE INVISIBLE DATA HOLDERS (This is the trick) */}
+                <Bar dataKey="km" />
+                <Bar dataKey="time" />
+                <Bar dataKey="calories" />
+
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+        </div>
     </div>
   )
 }
