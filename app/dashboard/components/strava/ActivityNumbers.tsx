@@ -11,8 +11,6 @@ import {
 } from '@/lib/utility-functions'
 // Component imports
 import { MomentumToggle } from '../../../../components/momentum/MomentumToggle'
-import ActivitySnippet from './ActivitySnippet'
-import { MomentumChart } from '@/components/momentum/MomentumChart'
 
 const ActivityNumbers: React.FC = () => {
   const activities = useMomentumGlobalStore((state) => state.activities)
@@ -32,10 +30,6 @@ const ActivityNumbers: React.FC = () => {
   const currentTime = calculateWeeklyTotalTime(activities, activeType).toString()
   const currentCals = calculateWeeklyAvgCalories(activities, activeType).toString()
 
-  // Pass data through utility function to transform it and prepare it for the chart
-  const chartData = getRollingSevenDayData(activities, activeType)
-  // Define dynamic color based on activity type
-  const chartColor = '#f56523'
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full space-y-3 text-black p-4">        
@@ -50,7 +44,7 @@ const ActivityNumbers: React.FC = () => {
 
         <section className='w-full h-full flex justify-center items-center'>
             <div className='w-full h-full flex justify-center items-center'>
-              <MomentumChart data={chartData} color={chartColor} />
+              
             </div>
         </section>
     </div>
