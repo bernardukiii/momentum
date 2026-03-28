@@ -1,6 +1,6 @@
 'use client'
 
-import React  from 'react'
+import React, { act }  from 'react'
 import { useMomentumGlobalStore } from '@/lib/store/momentumGlobalStore'
 import { 
   calculateWeeklyTotalDistance, 
@@ -12,6 +12,7 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/
 
 const ActivityNumbers: React.FC = () => {
   const activities = useMomentumGlobalStore((state) => state.activities)
+  const acts_count = activities.length
 
   const data = [
     { 
@@ -58,7 +59,7 @@ const ActivityNumbers: React.FC = () => {
         <div className='flex flex-col justify-center items-start w-3/4'>
             <div className='flex justify-center items-center'>
                 <label className='mr-2 uppercase text-sm'>Total activities:</label>
-                <span>20</span>
+                <span>{acts_count}</span>
             </div>
         </div>
 
