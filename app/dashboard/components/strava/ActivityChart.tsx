@@ -14,7 +14,7 @@ import { MomentumToggle } from '../../../../components/momentum/MomentumToggle'
 import ActivitySnippet from './ActivitySnippet'
 import { MomentumChart } from '@/components/momentum/MomentumChart'
 
-const StravaSummary: React.FC = () => {
+const ActivityChart: React.FC = () => {
   const activities = useMomentumGlobalStore((state) => state.activities)
   
   // 1. ADD STATE: Which view are we looking at? Default to 'Ride'
@@ -35,13 +35,11 @@ const StravaSummary: React.FC = () => {
   // Pass data through utility function to transform it and prepare it for the chart
   const chartData = getRollingSevenDayData(activities, activeType)
   // Define dynamic color based on activity type
-  const chartColor = activeType === 'Ride' ? '#f56523' : activeType === 'Run' ? '#3b82f6' : '#10b981'
+  const chartColor = '#f56523'
 
   return (
-    <div className="flex flex-col justify-center items-center h-full space-y-3 text-black">
-        <h1 className='text-lg font-bold text-black'>Insight summary</h1>
-        
-        <div className='w-full flex justify-end items-center'>
+    <div className="flex flex-col justify-center items-center w-full h-full space-y-3 text-black p-4">        
+        <div className='w-full h-full flex justify-end items-center'>
             {/* 3. UPDATE TOGGLE: Pass the state and setter to your toggle */}
             {/* Note: Ensure your MomentumToggle component accepts these props! */}
             <MomentumToggle 
@@ -51,23 +49,12 @@ const StravaSummary: React.FC = () => {
         </div>
 
         <section className='w-full h-full flex justify-center items-center'>
-            <div className='w-full h-full flex justify-center items-center border-2'>
+            <div className='w-full h-full flex justify-center items-center'>
               <MomentumChart data={chartData} color={chartColor} />
-            </div>
-            <div className='w-full h-full border-2 flex justify-center items-center'>
-              <section className='w-full flex flex-col justify-center items-center'>
-                {/* 4. PASS THE DYNAMIC PROPS */}
-                <ActivitySnippet 
-                  activityTitle={titleMap[activeType]}
-                  weeklyKms={currentKm}
-                  weeklyTime={currentTime}
-                  weeklyCalories={currentCals}
-                />
-              </section>
             </div>
         </section>
     </div>
   )
 }
 
-export default StravaSummary
+export default ActivityChart

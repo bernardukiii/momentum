@@ -13,7 +13,8 @@ import { useMomentumGlobalStore } from "@/lib/store/momentumGlobalStore"
 import Image from "next/image"
 import MomentumNavBar from "../../components/momentum/MomentumNavBar"
 import MomentumCard from "../../components/momentum/MomentumCard"
-import StravaSummary from "./components/strava/StravaSummary"
+import ActivityChart from "./components/strava/ActivityChart"
+import ActivityNumbers from "./components/strava/ActivityNumbers"
 
 
 type DashboardProps = {
@@ -73,7 +74,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
           // userId comes from your props: user.id
           await syncStravaActivities(accessToken, user!.id)
           
-          // 3. Refresh the UI so the StravaSummary card shows the new data
+          // 3. Refresh the UI so the ActivitySummary card shows the new data
           router.refresh()
           
           console.log("Sync Complete!")
@@ -133,12 +134,18 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   }, [user, isLoaded, setActivities, supabase])
 
   return (
-    <main className="w-full min-h-screen bg-linear-to-t from-momentum-primary-purple via-momentum-bg-soft via-90% to-white">
+    <main className="w-full min-h-screen bg-linear-to-t from-momentum-primary-purple-light via-momentum-bg-soft via-100% to-white">
       <MomentumNavBar userName={displayName} handleSignOut={handleSignOut} />
       
-      <div className="flex flex-col justify-center items-center mt-6">
+      <div className="flex flex-col justify-center items-center mt-6
+      ">
         {/* HEADER SECTION - WILL EVENTUALLY CONTAIN SOME INSIGHTS ON THE RIGHT SIDE */}
-        <section className="flex justify-center items-center w-full max-w-[95%] bg-momentum-bg-card rounded-2xl shadow-xl p-8 text-center border border-momentum-gray-primary" >
+        <section className="flex justify-center items-center w-full max-w-[95%] bg-momentum-bg-card rounded-2xl shadow-xl p-8 text-center border border-momentum-gray-primary
+            rounded-4xl shadow-sm hover:shadow-md transition-all group overflow-hidden
+          bg-white/50 backdrop-blur-md border border-white/30 shadow-lg
+        
+        
+        " >
           {/* LEFT SIDE - WELCOME AND LOGIN */}
           <div className="w-full border-r-px">
             {/* User Avatar / Icon placeholder */}
@@ -172,7 +179,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                                   onClick={handleStravaAuth}
                                 >
                                   <Image src="/strava-logo.svg" width={24} height={24} alt="strava-icon" />
-                                  <span className="ml-3 font-semibold text-momentum-midnight-indigo">Get Strava activities</span>
+                                  <span className="ml-3 font-semibold text-momentum-midnight-indigo">Get/Update Strava activities</span>
                                 </button>
                               </div>
             </div>
@@ -184,9 +191,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         </section>
 
         {/* CARD SECTION */}
-        <section className="w-full max-w-[85%] mt-6 grid grid-cols-2 lg:grid-cols-2 gap-8">
-          <MomentumCard title="Strava" icon={'/strava-logo.svg'}>
-            <StravaSummary />
+        <section className="w-full max-w-[85%] mt-6 flex justify-around items-center">
+          <MomentumCard title="Activities" icon={'/strava-logo.svg'}>
+            <ActivityNumbers />
+          </MomentumCard>
+
+          <MomentumCard title="Activity chart" icon={'/strava-logo.svg'}>
+            <ActivityChart />
           </MomentumCard>
         </section>
 
