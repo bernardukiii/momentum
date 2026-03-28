@@ -133,12 +133,18 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   }, [user, isLoaded, setActivities, supabase])
 
   return (
-    <main className="w-full min-h-screen bg-linear-to-t from-momentum-primary-purple-light via-momentum-bg-soft via-80% to-white">
+    <main className="w-full min-h-screen bg-linear-to-t from-momentum-primary-purple-light via-momentum-bg-soft via-100% to-white">
       <MomentumNavBar userName={displayName} handleSignOut={handleSignOut} />
       
-      <div className="flex flex-col justify-center items-center mt-6">
+      <div className="flex flex-col justify-center items-center mt-6
+      ">
         {/* HEADER SECTION - WILL EVENTUALLY CONTAIN SOME INSIGHTS ON THE RIGHT SIDE */}
-        <section className="flex justify-center items-center w-full max-w-[95%] bg-momentum-bg-card rounded-2xl shadow-xl p-8 text-center border border-momentum-gray-primary" >
+        <section className="flex justify-center items-center w-full max-w-[95%] bg-momentum-bg-card rounded-2xl shadow-xl p-8 text-center border border-momentum-gray-primary
+            rounded-4xl shadow-sm hover:shadow-md transition-all group overflow-hidden
+          bg-white/50 backdrop-blur-md border border-white/30 shadow-lg
+        
+        
+        " >
           {/* LEFT SIDE - WELCOME AND LOGIN */}
           <div className="w-full border-r-px">
             {/* User Avatar / Icon placeholder */}
