@@ -48,20 +48,9 @@ const ActivitySummary: React.FC = () => {
             />
         </div>
 
-        <section className='w-full h-full flex justify-center items-center'>
-            <div className='w-full h-full flex justify-center items-center border-2'>
+        <section className='w-full h flex justify-center items-center'>
+            <div className='w-full h-full flex justify-center items-center'>
               <MomentumChart data={chartData} color={chartColor} />
-            </div>
-            <div className='w-full h-full border-2 flex justify-center items-center'>
-              <section className='w-full flex flex-col justify-center items-center'>
-                {/* 4. PASS THE DYNAMIC PROPS */}
-                <ActivitySnippet 
-                  activityTitle={titleMap[activeType]}
-                  weeklyKms={currentKm}
-                  weeklyTime={currentTime}
-                  weeklyCalories={currentCals}
-                />
-              </section>
             </div>
         </section>
     </div>
