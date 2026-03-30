@@ -23,7 +23,6 @@ export function MomentumChart({ data, color = "#f56523" }: MomentumChartProps) {
             dataKey="day" 
             axisLine={false} 
             tickLine={false} 
-            // --- ADD THESE THREE PROPS ---
             interval={0}           // Forces every single label (Mon, Tue, Wed...) to render
             padding={{ left: 10, right: 10 }} // Gives Monday and Sunday some breathing room
             minTickGap={0}         // Prevents Recharts from hiding labels based on pixel distance
