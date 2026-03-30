@@ -10,6 +10,11 @@ export async function syncStravaActivities(accessToken: string, userId: string) 
   )
   
   const summaryActivities = await response.json()
+  // If i hit strava to many times, this will alert me
+  if (!Array.isArray(summaryActivities)) {
+    console.error("Strava API Error or Rate Limit:", summaryActivities);
+    throw new Error(summaryActivities.message || "Failed to fetch activities from Strava");
+  }
 
   // 2. Fetch "Detailed" data for each activity to get the calories
   // We use Promise.all to fetch all details simultaneously

@@ -23,7 +23,11 @@ export function MomentumChart({ data, color = "#f56523" }: MomentumChartProps) {
             dataKey="day" 
             axisLine={false} 
             tickLine={false} 
-            tick={{ fontSize: 12, fill: '#00000099' }}
+            interval={0}           // Forces every single label (Mon, Tue, Wed...) to render
+            padding={{ left: 10, right: 10 }} // Gives Monday and Sunday some breathing room
+            minTickGap={0}         // Prevents Recharts from hiding labels based on pixel distance
+            // -----------------------------
+            tick={{ fontSize: 10, fontWeight: 600, fill: '#94a3b8' }} 
           />
           <ChartTooltip content={<ChartTooltipContent hideLabel />} />
           <Line
