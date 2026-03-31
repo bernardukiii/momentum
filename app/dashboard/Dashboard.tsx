@@ -262,7 +262,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         </section>
 
         {/* CARD SECTION */}
-        <section className="w-full max-w-[85%] mt-6 flex justify-around items-start">
+        <section className="w-full max-w-[85%] mt-6 flex flex-col md:flex-col md:items-center xl:flex xl:flex-row justify-around items-start">
           <MomentumCard title="Activity chart" icon={'/strava-logo.svg'}>
             <ActivityChart />
           </MomentumCard>
