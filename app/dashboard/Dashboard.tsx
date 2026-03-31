@@ -1,7 +1,7 @@
 'use client'
 
 // react + nextjs imports
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 // supabase + strava imports
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client"
@@ -15,6 +15,7 @@ import MomentumNavBar from "../../components/momentum/MomentumNavBar"
 import MomentumCard from "../../components/momentum/MomentumCard"
 import ActivityChart from "./components/strava/ActivityChart"
 import ActivityNumbers from "./components/strava/ActivityNumbers"
+import AmortizationPopUp from "./components/amortization/AmortizationPopUp"
 
 
 type DashboardProps = {
@@ -27,8 +28,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const router = useRouter()
   // setting store
   const setActivities = useMomentumGlobalStore((state) => state.setActivities)
-  // Adding loading state
+  // state
   const isLoaded = useMomentumGlobalStore((state) => state.isLoaded)
+  const [isPopUpOpen, setPopUpOpen] = useState(false)
+  const [bike, setBike] = useState<any>(null)
 
   //// Strava auth to start getting activities ////
   // Handle window
@@ -89,8 +92,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   }
 
   // username
-  const displayName = user?.user_metadata?.full_name || user?.email || "Guest";
-  const userInitial = displayName.charAt(0).toUpperCase();
+  const displayName = user?.user_metadata?.full_name || user?.email || "Guest"
 
   async function handleSignOut() {
     // 1. Tell Supabase to kill the session
@@ -104,6 +106,53 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
       console.error("Error signing out:", error.message)
     }
   }
+
+  // fetch bike data if any
+  // 1. get the bike from the DB and put it in state
+  const loadBikeFromDb = async () => {
+    if (!user?.id) return
+    const { data, error } = await supabase
+      .from('bikes')
+      .select('*')
+      .eq('user_id', user.id)
+      .maybeSingle() // if no bike exists yet
+
+    if (data && !error) {
+      setBike(data)
+    }
+  }
+
+  // 2. calculate history and update the bike
+  const syncBikeWithHistory = async (bikeId: string) => {
+    if (!user?.id) return
+
+    // Get sum of all 'Ride' distances
+    const { data: activitySum, error: sumError } = await supabase
+      .from('activities')
+      .select('distance')
+      .eq('user_id', user.id)
+      .eq('type', 'Ride')
+
+    if (sumError) return
+
+    const totalHistoryKm = activitySum.reduce((acc, curr) => acc + (curr.distance / 1000), 0)
+
+    // Update the bike record with this historical total
+    const { error: updateError } = await supabase
+      .from('bikes')
+      .update({ total_km: totalHistoryKm })
+      .eq('id', bikeId)
+
+    if (!updateError) {
+      // Refresh the state so the card shows the new total_km
+      loadBikeFromDb()
+    }
+  }
+
+  // Initial Load: Just get the bike if it exists
+  useEffect(() => {
+    if (user) loadBikeFromDb()
+  }, [user])
 
   // useEffect to hydrate with zustand store
   useEffect(() => {
@@ -168,24 +217,32 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
             </div>
           </div>
           {/* RIGHT SIDE - QUICK SNAP INSIGHTS */}
-          <div className="w-full flex justify-between items-center border-l-px text-black">
-            {/* STRAVA */}
-            <div className="w-full">
-              {/* Google Provider */}
-                              <div className="space-y-3 mb-8 cursor-pointer">
-                                <button 
-                                  type="button"
-                                  className="w-3/4 h-12 px-4 flex justify-center pointer-events-auto items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
-                                  onClick={handleStravaAuth}
-                                >
-                                  <Image src="/strava-logo.svg" width={24} height={24} alt="strava-icon" />
-                                  <span className="ml-3 font-semibold text-momentum-midnight-indigo">Get/Update Strava activities</span>
-                                </button>
-                              </div>
+          <div className="w-full flex items-center justify-end border-l-px text-black">
+            <div>
+               {/* STRAVA BUTTON */}
+              <div className="mb-8 cursor-pointer">
+                <button 
+                  type="button"
+                  className="w-3/4 h-full p-4 flex flex-col justify-center pointer-events-auto items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
+                  onClick={handleStravaAuth}
+                >
+                  <Image src="/strava-logo.svg" width={24} height={24} alt="strava-icon" />
+                  <span className="m-2 font-semibold text-momentum-midnight-indigo">Get/Update Strava activities</span>
+                </button>
+              </div>
             </div>
-            {/* COFFE INTAKE COUNTER MAYBE */}
-            <div className="w-full">
-              COFFEE TRACKER MAYBE
+            {/* Calculate amortization */}
+            <div>
+              <div className="mb-8 cursor-pointer">
+                <button 
+                  type="button"
+                  className="w-3/4 h-full p-4 flex flex-col justify-center pointer-events-auto items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
+                  onClick={() => setPopUpOpen(true)}
+                >
+                  <Image src="/amortization-icon.png" width={24} height={24} alt="strava-icon" />
+                  <span className="m-2 font-semibold text-momentum-midnight-indigo">Calculate bike amortization</span>
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -199,10 +256,75 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
           <MomentumCard title="Activity chart" icon={'/strava-logo.svg'}>
             <ActivityChart />
           </MomentumCard>
+
+          {/* IF BIKE DATA, NEW CARD TO DISPLAY THE AMORTIZATION */}
+          {bike ? (
+            <MomentumCard title="Bike Amortization" icon="/bike-icon.svg">
+              <div className="p-5 space-y-5">
+                {/* Header Info */}
+                <div className="flex justify-between items-start">
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Bike</p>
+                    <h3 className="text-xl font-black text-momentum-black leading-tight">
+                      {bike.brand} <span className="text-momentum-primary-purple">{bike.model}</span>
+                    </h3>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Spent on bike</p>
+                    <p className="font-bold text-slate-700">€{bike.price}</p>
+                  </div>
+                </div>
+
+                {/* Progress Section */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-end">
+                    <p className="text-4xl font-black text-momentum-black">
+                      {Math.min(((bike.total_km * 0.41) / bike.price) * 100, 100).toFixed(1)}%
+                    </p>
+                    <p className="text-[10px] font-bold text-emerald-600 uppercase italic">
+                      €{(bike.total_km * 0.41).toFixed(2)} amortized
+                    </p>
+                  </div>
+                  
+                  {/* Progress Bar */}
+                  <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-100">
+                    <div 
+                      className="h-full bg-linear-to-r from-emerald-400 to-teal-500 transition-all duration-1000" 
+                      style={{ width: `${Math.min(((bike.total_km * 0.41) / bike.price) * 100, 100)}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* Footer Stats */}
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="bg-slate-50/50 p-3 rounded-2xl border border-white">
+                    <p className="text-[9px] uppercase font-bold text-slate-400">Lifetime KM</p>
+                    <p className="text-lg font-black text-slate-700">{bike.total_km.toFixed(0)}</p>
+                  </div>
+                  <div className="bg-slate-50/50 p-3 rounded-2xl border border-white">
+                    <p className="text-[9px] uppercase font-bold text-slate-400">Est. Weeks Left</p>
+                    <p className="text-lg font-black text-slate-700">
+                      {Math.ceil((bike.price - (bike.total_km * 0.41)) / (0.41 * 40)) || 0}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </MomentumCard>
+          ) : (
+            /* Empty State - Click to add bike */
+            ''
+          )}
+
+
         </section>
-
-
       </div>
+
+        <AmortizationPopUp 
+          isOpen={isPopUpOpen} 
+          onClose={() => setPopUpOpen(false)} 
+          userId={user.id}
+          onSuccess={(newBikeId) => syncBikeWithHistory(newBikeId)}
+        />
     </main>
   )
 }
