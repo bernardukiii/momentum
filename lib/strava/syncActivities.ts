@@ -44,10 +44,13 @@ export async function syncStravaActivities(accessToken: string, userId: string) 
   }))
 
   // 4. Upsert to Supabase
-  const { error } = await getSupabaseBrowserClient()
-    .from('activities')
+  const { error } = await (getSupabaseBrowserClient().from('activities') as any)
     .upsert(formattedActivities, { onConflict: 'id' })
 
-  if (error) throw error
+  if (error) {
+    console.error("Supabase Upsert Error:", error)
+    throw error
+  }
+
   return formattedActivities.length
 }

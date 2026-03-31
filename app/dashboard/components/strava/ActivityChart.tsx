@@ -50,7 +50,7 @@ const ActivityChart: React.FC = () => {
 
         <section className='w-full h-full flex justify-center items-center'>
             <div className='w-full h-full flex justify-center items-center'>
-              <MomentumChart data={chartData} color={chartColor} />
+              <MomentumChart data={chartData} color={chartColor} dataKey='distance' labelKey='day' />
             </div>
         </section>
     </div>

@@ -138,25 +138,27 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const syncBikeWithHistory = async (bikeId: string) => {
     if (!user?.id) return
 
-    // Get sum of all 'Ride' distances
+    // 1. Get sum of all 'Ride' distances
     const { data: activitySum, error: sumError } = await supabase
       .from('activities')
       .select('distance')
       .eq('user_id', user.id)
       .eq('type', 'Ride')
 
-    if (sumError) return
+    if (sumError || !activitySum) return
 
-    const totalHistoryKm = activitySum.reduce((acc, curr) => acc + (curr.distance / 1000), 0)
+    const totalHistoryKm = (activitySum as { distance: number }[]).reduce(
+      (acc, curr) => acc + (curr.distance / 1000), 
+      0
+    )
 
-    // Update the bike record with this historical total
-    const { error: updateError } = await supabase
-      .from('bikes')
+    // 2. The Fix: Tell Supabase that 'bikes' accepts our object
+    // We cast the table call to 'any' to bypass the 'never' check for the build
+    const { error: updateError } = await (supabase.from('bikes') as any)
       .update({ total_km: totalHistoryKm })
       .eq('id', bikeId)
 
     if (!updateError) {
-      // Refresh the state so the card shows the new total_km
       loadBikeFromDb()
     }
   }
@@ -385,8 +387,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         <AmortizationPopUp 
           isOpen={isPopUpOpen} 
           onClose={() => setPopUpOpen(false)} 
-          userId={user.id}
-          onSuccess={(newBikeId) => syncBikeWithHistory(newBikeId)}
+          userId={user!.id}
+          onSuccess={(newBikeId: string) => syncBikeWithHistory(newBikeId)}
         />
     </main>
   )

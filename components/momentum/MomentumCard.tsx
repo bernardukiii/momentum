@@ -6,7 +6,7 @@ import Image from 'next/image'
 interface MomentumCardProps {
   title: string
   icon?: string
-  onExpand: () => void // function to open to a popup
+  onExpand?: () => void // function to open to a popup
   children: React.ReactNode // with children we can change the content
 }
 

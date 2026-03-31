@@ -9,6 +9,7 @@ type ActivityType = 'Ride' | 'Run' | 'Walk'
 
 interface MomentumToggleProps {
   // This must match exactly what you pass from the parent
+  activeType: ActivityType
   onTypeChange: (value: ActivityType) => void
 }
 
