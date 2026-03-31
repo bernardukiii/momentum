@@ -1,7 +1,7 @@
 'use client'
 
 // react + nextjs imports
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 // supabase + strava imports
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client"
@@ -29,7 +29,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const setActivities = useMomentumGlobalStore((state) => state.setActivities)
   // Adding loading state
   const isLoaded = useMomentumGlobalStore((state) => state.isLoaded)
-
+  // pop up state
+  const [isPopUpOpen, setPopUpOpen] = useState(false)
   //// Strava auth to start getting activities ////
   // Handle window
   const handleStravaAuth = () => {
@@ -91,6 +92,11 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   // username
   const displayName = user?.user_metadata?.full_name || user?.email || "Guest";
   const userInitial = displayName.charAt(0).toUpperCase();
+
+  // open amortization pop up to ask for bike brand, model and price
+  const openAmortizationPopUp = () => {
+
+  }
 
   async function handleSignOut() {
     // 1. Tell Supabase to kill the session
@@ -188,7 +194,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                 <button 
                   type="button"
                   className="w-3/4 h-full p-4 flex flex-col justify-center pointer-events-auto items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
-                  onClick={handleStravaAuth}
+                  onClick={openAmortizationPopUp}
                 >
                   <Image src="/amortization-icon.png" width={24} height={24} alt="strava-icon" />
                   <span className="m-2 font-semibold text-momentum-midnight-indigo">Calculate bike amortization</span>
