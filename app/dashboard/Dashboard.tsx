@@ -304,8 +304,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
               {/* Fun Insight */}
               <div className="mt-4 pt-4 border-t border-slate-50">
-                <p className="text-[11px] text-slate-500 font-medium italic">
-                  That's roughly <span className="text-momentum-black font-bold">{bitterballenEquivalent} bitterballen</span> earned back!
+                <p className="text-lg text-slate-500 font-medium italic">
+                  That's roughly <span className="text-momentum-black font-bold">{bitterballenEquivalent} bitterballen</span>!
                 </p>
               </div>
             </div>
