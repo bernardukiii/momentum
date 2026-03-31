@@ -203,7 +203,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
       <div className="flex flex-col justify-center items-center mt-6
       ">
         {/* HEADER SECTION - WILL EVENTUALLY CONTAIN SOME INSIGHTS ON THE RIGHT SIDE */}
-        <section className="flex justify-center items-center w-full max-w-[95%] bg-momentum-bg-card rounded-2xl shadow-xl p-8 text-center border border-momentum-gray-primary
+        <section className="flex flex-col md:flex-row lg:flex-row xl:flex-row justify-center items-center w-full max-w-[95%] bg-momentum-bg-card rounded-2xl shadow-xl p-8 text-center border border-momentum-gray-primary
             rounded-4xl shadow-sm hover:shadow-md transition-all group overflow-hidden
           bg-white/50 backdrop-blur-md border border-white/30 shadow-lg
         
@@ -262,7 +262,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         </section>
 
         {/* CARD SECTION */}
-        <section className="w-full max-w-[85%] mt-6 flex justify-around items-start">
+        <section className="w-full max-w-[85%] mt-6 flex flex-col md:flex-col md:items-center xl:flex xl:flex-row justify-around lg:items-start">
           <MomentumCard title="Activity chart" icon={'/strava-logo.svg'}>
             <ActivityChart />
           </MomentumCard>

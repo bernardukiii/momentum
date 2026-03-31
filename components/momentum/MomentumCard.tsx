@@ -12,8 +12,9 @@ interface MomentumCardProps {
 
 const MomentumCard: React.FC<MomentumCardProps> = ({ title, icon, onExpand, children }) => {
   return (
-    <div className="flex flex-col h-fit w-fit rounded-4xl shadow-sm hover:shadow-md transition-all group overflow-hidden
+    <div className="flex flex-col w-full h-full xl:h-fit xl:w-fit md:h-fit md:w-fit rounded-4xl shadow-sm hover:shadow-md transition-all group overflow-hidden
                   bg-white/50 backdrop-blur-md border border-white/30 shadow-lg
+                  mb-4
     ">
       
       {/* Header */}
