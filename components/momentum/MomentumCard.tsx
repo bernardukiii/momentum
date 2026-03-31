@@ -18,8 +18,6 @@ const MomentumCard: React.FC<MomentumCardProps> = ({ title, icon, onExpand, chil
       
       {/* Header */}
       <div className="p-5 pb-2 flex justify-start items-center">
-        <Image src={icon} alt='card-icon' width={40} height={40} className='rounded-full' />
-
         <h3 className="ml-2 text-lg font-black text-momentum-black-64 uppercase tracking-widest">
           {title}
         </h3>
