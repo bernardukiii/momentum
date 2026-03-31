@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation"
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client"
 import { syncStravaActivities } from "@/lib/strava/syncActivities"
 import { User } from "@supabase/supabase-js"
+// utility function imports
+import { getWeeklyCalories } from "@/lib/utility-functions"
 // importing store
 import { useMomentumGlobalStore } from "@/lib/store/momentumGlobalStore"
 // component imports
@@ -29,9 +31,17 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   // setting store
   const setActivities = useMomentumGlobalStore((state) => state.setActivities)
   // state
+  const activities = useMomentumGlobalStore((state) => state.activities)
   const isLoaded = useMomentumGlobalStore((state) => state.isLoaded)
   const [isPopUpOpen, setPopUpOpen] = useState(false)
   const [bike, setBike] = useState<any>(null)
+
+  // Caloric spenditure
+  const weeklyTotal = getWeeklyCalories(activities)
+  // comparing to bitterball just for fun
+  const bitterballenEquivalent = Math.floor(weeklyTotal / 55)
+  // Simple percentage for a gauge (e.g., goal of 4000 kcal/week)
+  const calorieProgress = Math.min((weeklyTotal / 4000) * 100, 100)
 
   //// Strava auth to start getting activities ////
   // Handle window
@@ -244,20 +254,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                 </button>
               </div>
             </div>
-
-            {/* Estimate caloric intake */}
-            <div>
-              <div className="mb-8 cursor-pointer">
-                <button 
-                  type="button"
-                  className="w-3/4 h-full p-4 flex flex-col justify-center pointer-events-auto items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
-                  onClick={() => setPopUpOpen(true)}
-                >
-                  <Image src="/nutrition.png" width={24} height={24} alt="nutrition-icon" />
-                  <span className="m-2 font-semibold text-momentum-midnight-indigo">Estimate caloric intake</span>
-                </button>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -270,6 +266,51 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
           <MomentumCard title="Activity chart" icon={'/strava-logo.svg'}>
             <ActivityChart />
           </MomentumCard>
+
+          {/* WEEKLY CALORIC BURN CARD */}
+          <MomentumCard title="Weekly Active Burn" icon="/nutrition.svg">
+            <div className="p-5 flex flex-col h-full justify-between">
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    Last 7 Days
+                  </p>
+                  <div className="flex items-baseline gap-2">
+                    <p className="text-4xl font-black text-momentum-black tracking-tighter">
+                      {weeklyTotal.toLocaleString()}
+                    </p>
+                    <span className="text-sm font-bold text-orange-500 uppercase">kcal</span>
+                  </div>
+                </div>
+                
+                <div className="bg-orange-50 p-2 rounded-xl">
+                  <span className="text-xl">🔥</span>
+                </div>
+              </div>
+
+              {/* Visual Gauge */}
+              <div className="mt-4 space-y-2">
+                <div className="flex justify-between text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
+                  <span>Baseline</span>
+                  <span>Peak Performance</span>
+                </div>
+                <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-orange-400 to-red-500 transition-all duration-1000" 
+                    style={{ width: `${calorieProgress}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Fun Insight */}
+              <div className="mt-4 pt-4 border-t border-slate-50">
+                <p className="text-[11px] text-slate-500 font-medium italic">
+                  That's roughly <span className="text-momentum-black font-bold">{bitterballenEquivalent} bitterballen</span> earned back!
+                </p>
+              </div>
+            </div>
+          </MomentumCard>
+
 
           {/* IF BIKE DATA, NEW CARD TO DISPLAY THE AMORTIZATION */}
           {bike ? (
