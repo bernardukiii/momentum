@@ -51,11 +51,23 @@ const Home: React.FC = () => {
 
           {/* Hero Visual - Dashboard Preview */}
           <div className="hidden md:block md:w-1/2 relative">
+            {/* The Glow Effect */}
             <div className="absolute -inset-4 bg-linear-to-r from-purple-500/20 to-emerald-500/20 blur-3xl rounded-full" />
+            
+            {/* The Glass Card Frame */}
             <div className="relative bg-white/80 backdrop-blur-md border border-white p-4 rounded-[2rem] shadow-2xl rotate-2">
-              <div className="bg-slate-50 rounded-xl aspect-video flex items-center justify-center">
-                  <span className="text-slate-300 font-bold uppercase tracking-widest">Dashboard Preview</span>
+              
+              {/* The Image Container - relative + overflow-hidden to clip the image to the rounded corners */}
+              <div className="relative bg-slate-50 rounded-xl aspect-video flex items-center justify-center overflow-hidden">
+                  <Image 
+                    src='/dashboard-image.png' 
+                    alt='Momentum Dashboard Preview'
+                    fill // fill the parent container
+                    className="object-cover" // cover the area without stretching (cropping edges if needed)
+                    priority
+                  />
               </div>
+              
             </div>
           </div>
         </header>
