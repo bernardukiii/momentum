@@ -25,7 +25,8 @@ const AmortizationPopUp: React.FC<AmortizationPopUpProps> = ({ isOpen, onClose, 
     const supabase = getSupabaseBrowserClient()
 
     try {
-      const { error } = await supabase
+      // 1. Insert and SELECT the new record back
+      const { data, error } = await supabase
         .from('bikes')
         .insert([
           {
@@ -33,14 +34,20 @@ const AmortizationPopUp: React.FC<AmortizationPopUpProps> = ({ isOpen, onClose, 
             brand: brand,
             model: model,
             price: parseFloat(price),
-            total_km: 0, // Starts at zero
-            cost_per_km: 0.41 // Your fixed Amsterdam price per KM
+            total_km: 0, 
+            cost_per_km: 0.41 
           }
         ])
+        .select() // <--- CRITICAL: Returns the created bike data
+        .single() // <--- Ensures we get just the one object
 
       if (error) throw error
       
-      onSuccess()
+      // 2. Pass the new ID back to the dashboard's success handler
+      if (data) {
+        onSuccess(data.id)
+      }
+      
       onClose()
     } catch (err) {
       console.error("Error saving bike:", err)

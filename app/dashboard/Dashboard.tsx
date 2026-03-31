@@ -108,23 +108,50 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   }
 
   // fetch bike data if any
-  const fetchBikeData = async () => {
+  // 1. get the bike from the DB and put it in state
+  const loadBikeFromDb = async () => {
     if (!user?.id) return
-    
     const { data, error } = await supabase
       .from('bikes')
       .select('*')
       .eq('user_id', user.id)
-      .single(); // Assuming one primary bike for now
+      .maybeSingle() // if no bike exists yet
 
-    if (!error && data) {
+    if (data && !error) {
       setBike(data)
     }
   }
 
-  // Fetch bike on initial load
+  // 2. calculate history and update the bike
+  const syncBikeWithHistory = async (bikeId: string) => {
+    if (!user?.id) return
+
+    // Get sum of all 'Ride' distances
+    const { data: activitySum, error: sumError } = await supabase
+      .from('activities')
+      .select('distance')
+      .eq('user_id', user.id)
+      .eq('type', 'Ride')
+
+    if (sumError) return
+
+    const totalHistoryKm = activitySum.reduce((acc, curr) => acc + (curr.distance / 1000), 0)
+
+    // Update the bike record with this historical total
+    const { error: updateError } = await supabase
+      .from('bikes')
+      .update({ total_km: totalHistoryKm })
+      .eq('id', bikeId)
+
+    if (!updateError) {
+      // Refresh the state so the card shows the new total_km
+      loadBikeFromDb()
+    }
+  }
+
+  // Initial Load: Just get the bike if it exists
   useEffect(() => {
-    if (user) fetchBikeData()
+    if (user) loadBikeFromDb()
   }, [user])
 
   // useEffect to hydrate with zustand store
@@ -296,7 +323,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
           isOpen={isPopUpOpen} 
           onClose={() => setPopUpOpen(false)} 
           userId={user.id}
-          onSuccess={() => fetchBikeData()} // Function to re-pull bike stats
+          onSuccess={(newBikeId) => syncBikeWithHistory(newBikeId)}
         />
     </main>
   )
