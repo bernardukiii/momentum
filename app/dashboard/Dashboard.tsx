@@ -31,7 +31,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   // Adding loading state
   const isLoaded = useMomentumGlobalStore((state) => state.isLoaded)
   // pop up state
-  const [isPopUpOpen, setPopUpOpen] = useState(true)
+  const [isPopUpOpen, setPopUpOpen] = useState(false)
   //// Strava auth to start getting activities ////
   // Handle window
   const handleStravaAuth = () => {
