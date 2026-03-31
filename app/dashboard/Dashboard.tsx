@@ -145,9 +145,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
       .eq('user_id', user.id)
       .eq('type', 'Ride')
 
-    if (sumError) return
+    if (sumError || !activitySum) return
 
-    const totalHistoryKm = activitySum.reduce((acc, curr) => acc + (curr.distance / 1000), 0)
+    // Explicitly cast or type the reduction to avoid 'never'
+    const totalHistoryKm = (activitySum as { distance: number }[]).reduce(
+      (acc, curr) => acc + (curr.distance / 1000), 
+      0
+    )
 
     // Update the bike record with this historical total
     const { error: updateError } = await supabase
@@ -156,7 +160,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
       .eq('id', bikeId)
 
     if (!updateError) {
-      // Refresh the state so the card shows the new total_km
       loadBikeFromDb()
     }
   }
