@@ -258,13 +258,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         </section>
 
         {/* CARD SECTION */}
-        <section className="w-full max-w-[85%] mt-6 flex justify-around items-center">
-          <MomentumCard title="Activities" icon={'/strava-logo.svg'}>
-            <ActivityNumbers />
-          </MomentumCard>
-
+        <section className="w-full max-w-[85%] mt-6 flex justify-around items-start">
           <MomentumCard title="Activity chart" icon={'/strava-logo.svg'}>
             <ActivityChart />
+          </MomentumCard>
+
+          <MomentumCard title="Activities" icon={'/strava-logo.svg'}>
+            <ActivityNumbers />
           </MomentumCard>
 
           {/* WEEKLY CALORIC BURN CARD */}
