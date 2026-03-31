@@ -387,7 +387,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         <AmortizationPopUp 
           isOpen={isPopUpOpen} 
           onClose={() => setPopUpOpen(false)} 
-          userId={user.id}
+          userId={user!.id}
           onSuccess={(newBikeId) => syncBikeWithHistory(newBikeId)}
         />
     </main>
