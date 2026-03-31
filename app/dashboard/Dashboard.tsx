@@ -168,24 +168,32 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
             </div>
           </div>
           {/* RIGHT SIDE - QUICK SNAP INSIGHTS */}
-          <div className="w-full flex justify-between items-center border-l-px text-black">
-            {/* STRAVA */}
-            <div className="w-full">
-              {/* Google Provider */}
-                              <div className="space-y-3 mb-8 cursor-pointer">
-                                <button 
-                                  type="button"
-                                  className="w-3/4 h-12 px-4 flex justify-center pointer-events-auto items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
-                                  onClick={handleStravaAuth}
-                                >
-                                  <Image src="/strava-logo.svg" width={24} height={24} alt="strava-icon" />
-                                  <span className="ml-3 font-semibold text-momentum-midnight-indigo">Get/Update Strava activities</span>
-                                </button>
-                              </div>
+          <div className="w-full flex items-center justify-end border-l-px text-black">
+            <div>
+               {/* STRAVA BUTTON */}
+              <div className="mb-8 cursor-pointer">
+                <button 
+                  type="button"
+                  className="w-3/4 h-full p-4 flex flex-col justify-center pointer-events-auto items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
+                  onClick={handleStravaAuth}
+                >
+                  <Image src="/strava-logo.svg" width={24} height={24} alt="strava-icon" />
+                  <span className="m-2 font-semibold text-momentum-midnight-indigo">Get/Update Strava activities</span>
+                </button>
+              </div>
             </div>
-            {/* COFFE INTAKE COUNTER MAYBE */}
-            <div className="w-full">
-              COFFEE TRACKER MAYBE
+            {/* Calculate amortization */}
+            <div>
+              <div className="mb-8 cursor-pointer">
+                <button 
+                  type="button"
+                  className="w-3/4 h-full p-4 flex flex-col justify-center pointer-events-auto items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
+                  onClick={handleStravaAuth}
+                >
+                  <Image src="/amortization-icon.png" width={24} height={24} alt="strava-icon" />
+                  <span className="m-2 font-semibold text-momentum-midnight-indigo">Calculate bike amortization</span>
+                </button>
+              </div>
             </div>
           </div>
         </section>
