@@ -15,6 +15,7 @@ import MomentumNavBar from "../../components/momentum/MomentumNavBar"
 import MomentumCard from "../../components/momentum/MomentumCard"
 import ActivityChart from "./components/strava/ActivityChart"
 import ActivityNumbers from "./components/strava/ActivityNumbers"
+import AmortizationPopUp from "./components/amortization/AmortizationPopUp"
 
 
 type DashboardProps = {
@@ -30,7 +31,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   // Adding loading state
   const isLoaded = useMomentumGlobalStore((state) => state.isLoaded)
   // pop up state
-  const [isPopUpOpen, setPopUpOpen] = useState(false)
+  const [isPopUpOpen, setPopUpOpen] = useState(true)
   //// Strava auth to start getting activities ////
   // Handle window
   const handleStravaAuth = () => {
@@ -214,9 +215,14 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
             <ActivityChart />
           </MomentumCard>
         </section>
-
-
       </div>
+
+        <AmortizationPopUp 
+          isOpen={isPopUpOpen} 
+          onClose={() => setPopUpOpen(false)} 
+          userId={user.id}
+          onSuccess={() => fetchBikeData()} // Function to re-pull bike stats
+        />
     </main>
   )
 }
