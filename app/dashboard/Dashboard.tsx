@@ -32,7 +32,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const isLoaded = useMomentumGlobalStore((state) => state.isLoaded)
   const [isPopUpOpen, setPopUpOpen] = useState(false)
   const [bike, setBike] = useState<any>(null)
-  
+
   //// Strava auth to start getting activities ////
   // Handle window
   const handleStravaAuth = () => {
@@ -229,6 +229,66 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
           <MomentumCard title="Activity chart" icon={'/strava-logo.svg'}>
             <ActivityChart />
           </MomentumCard>
+
+          {/* IF BIKE DATA, NEW CARD TO DISPLAY THE AMORTIZATION */}
+          {bike ? (
+            <MomentumCard title="Bike Amortization" icon="/bike-icon.svg">
+              <div className="p-5 space-y-5">
+                {/* Header Info */}
+                <div className="flex justify-between items-start">
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Bike</p>
+                    <h3 className="text-xl font-black text-momentum-black leading-tight">
+                      {bike.brand} <span className="text-momentum-primary-purple">{bike.model}</span>
+                    </h3>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Spent on bike</p>
+                    <p className="font-bold text-slate-700">€{bike.price}</p>
+                  </div>
+                </div>
+
+                {/* Progress Section */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-end">
+                    <p className="text-4xl font-black text-momentum-black">
+                      {Math.min(((bike.total_km * 0.41) / bike.price) * 100, 100).toFixed(1)}%
+                    </p>
+                    <p className="text-[10px] font-bold text-emerald-600 uppercase italic">
+                      €{(bike.total_km * 0.41).toFixed(2)} amortized
+                    </p>
+                  </div>
+                  
+                  {/* Progress Bar */}
+                  <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-100">
+                    <div 
+                      className="h-full bg-linear-to-r from-emerald-400 to-teal-500 transition-all duration-1000" 
+                      style={{ width: `${Math.min(((bike.total_km * 0.41) / bike.price) * 100, 100)}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* Footer Stats */}
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="bg-slate-50/50 p-3 rounded-2xl border border-white">
+                    <p className="text-[9px] uppercase font-bold text-slate-400">Lifetime KM</p>
+                    <p className="text-lg font-black text-slate-700">{bike.total_km.toFixed(0)}</p>
+                  </div>
+                  <div className="bg-slate-50/50 p-3 rounded-2xl border border-white">
+                    <p className="text-[9px] uppercase font-bold text-slate-400">Est. Weeks Left</p>
+                    <p className="text-lg font-black text-slate-700">
+                      {Math.ceil((bike.price - (bike.total_km * 0.41)) / (0.41 * 40)) || 0}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </MomentumCard>
+          ) : (
+            /* Empty State - Click to add bike */
+            ''
+          )}
+
+
         </section>
       </div>
 
