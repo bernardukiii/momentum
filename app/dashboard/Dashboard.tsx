@@ -40,6 +40,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const weeklyTotal = getWeeklyCalories(activities)
   // comparing to bitterball just for fun
   const bitterballenEquivalent = Math.floor(weeklyTotal / 55)
+  const burgerEquivalent = (weeklyTotal / 600).toFixed(1)
+  const milanesaEquivalent = (weeklyTotal / 850).toFixed(1)
   // Simple percentage for a gauge (e.g., goal of 4000 kcal/week)
   const calorieProgress = Math.min((weeklyTotal / 4000) * 100, 100)
 
@@ -305,7 +307,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
               {/* Fun Insight */}
               <div className="mt-4 pt-4 border-t border-slate-50">
                 <p className="text-lg text-slate-500 font-medium italic">
-                  That's roughly <span className="text-momentum-black font-bold">{bitterballenEquivalent} bitterballen</span>!
+                  That's roughly <span className="text-momentum-black font-bold">{bitterballenEquivalent} bitterballen</span>,
+                </p>
+                <p className="text-lg text-slate-500 font-medium italic">
+                  or <span className="text-momentum-black font-bold">{milanesaEquivalent} sandwiches de milanesa</span>,
+                </p>
+                <p className="text-lg text-slate-500 font-medium italic">
+                  or <span className="text-momentum-black font-bold">{burgerEquivalent} burgers</span>!
                 </p>
               </div>
             </div>
