@@ -388,7 +388,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
           isOpen={isPopUpOpen} 
           onClose={() => setPopUpOpen(false)} 
           userId={user!.id}
-          onSuccess={(newBikeId) => syncBikeWithHistory(newBikeId)}
+          onSuccess={(newBikeId: string) => syncBikeWithHistory(newBikeId)}
         />
     </main>
   )

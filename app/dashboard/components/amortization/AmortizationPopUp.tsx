@@ -8,7 +8,7 @@ interface AmortizationPopUpProps {
   isOpen: boolean
   onClose: () => void
   userId: string
-  onSuccess: () => void // Refresh the dashboard data after saving
+  onSuccess: (bikeId: string) => void;
 }
 
 const AmortizationPopUp: React.FC<AmortizationPopUpProps> = ({ isOpen, onClose, userId, onSuccess }) => {
