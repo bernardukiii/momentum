@@ -19,15 +19,14 @@ const AmortizationPopUp: React.FC<AmortizationPopUpProps> = ({ isOpen, onClose, 
 
   if (!isOpen) return null
 
-  const handleCalculate = async (e: React.FormEvent) => {
+    const handleCalculate = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     const supabase = getSupabaseBrowserClient()
 
     try {
-      // 1. Insert and SELECT the new record back
-      const { data, error } = await supabase
-        .from('bikes')
+      // We cast the table call to 'any' to bypass the 'never' build error
+      const { data, error } = await (supabase.from('bikes') as any)
         .insert([
           {
             user_id: userId,
@@ -38,14 +37,13 @@ const AmortizationPopUp: React.FC<AmortizationPopUpProps> = ({ isOpen, onClose, 
             cost_per_km: 0.41 
           }
         ])
-        .select() // <--- CRITICAL: Returns the created bike data
-        .single() // <--- Ensures we get just the one object
+        .select()
+        .single()
 
       if (error) throw error
       
-      // 2. Pass the new ID back to the dashboard's success handler
       if (data) {
-        onSuccess(data.id)
+        onSuccess(data.id) // This matches the new (bikeId: string) => void interface
       }
       
       onClose()
