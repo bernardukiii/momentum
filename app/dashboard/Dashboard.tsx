@@ -91,13 +91,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   }
 
   // username
-  const displayName = user?.user_metadata?.full_name || user?.email || "Guest";
-  const userInitial = displayName.charAt(0).toUpperCase();
-
-  // open amortization pop up to ask for bike brand, model and price
-  const openAmortizationPopUp = () => {
-
-  }
+  const displayName = user?.user_metadata?.full_name || user?.email || "Guest"
 
   async function handleSignOut() {
     // 1. Tell Supabase to kill the session
@@ -195,7 +189,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                 <button 
                   type="button"
                   className="w-3/4 h-full p-4 flex flex-col justify-center pointer-events-auto items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
-                  onClick={openAmortizationPopUp}
+                  onClick={() => setPopUpOpen(true)}
                 >
                   <Image src="/amortization-icon.png" width={24} height={24} alt="strava-icon" />
                   <span className="m-2 font-semibold text-momentum-midnight-indigo">Calculate bike amortization</span>
