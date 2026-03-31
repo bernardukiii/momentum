@@ -239,8 +239,22 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
                   className="w-3/4 h-full p-4 flex flex-col justify-center pointer-events-auto items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
                   onClick={() => setPopUpOpen(true)}
                 >
-                  <Image src="/amortization-icon.png" width={24} height={24} alt="strava-icon" />
+                  <Image src="/amortization-icon.png" width={24} height={24} alt="amortization-icon" />
                   <span className="m-2 font-semibold text-momentum-midnight-indigo">Calculate bike amortization</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Estimate caloric intake */}
+            <div>
+              <div className="mb-8 cursor-pointer">
+                <button 
+                  type="button"
+                  className="w-3/4 h-full p-4 flex flex-col justify-center pointer-events-auto items-center border border-momentum-gray-primary rounded-lg hover:bg-momentum-gray-secondary transition-colors group"
+                  onClick={() => setPopUpOpen(true)}
+                >
+                  <Image src="/nutrition.png" width={24} height={24} alt="nutrition-icon" />
+                  <span className="m-2 font-semibold text-momentum-midnight-indigo">Estimate caloric intake</span>
                 </button>
               </div>
             </div>
