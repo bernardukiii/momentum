@@ -63,3 +63,17 @@ export const getRollingSevenDayData = (activities: any[], type: string) => {
     }
   })
 }
+
+// Calories spent weekly
+export const getWeeklyCalories = (activities: any[]) => {
+  // 1. Get the date 7 days ago
+  const sevenDaysAgo = new Date()
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+
+  // 2. Filter and Sum
+  const total = activities
+    .filter(a => new Date(a.start_date) >= sevenDaysAgo)
+    .reduce((sum, a) => sum + (a.calories || 0), 0)
+
+  return Math.round(total)
+}
