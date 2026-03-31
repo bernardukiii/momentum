@@ -28,10 +28,11 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const router = useRouter()
   // setting store
   const setActivities = useMomentumGlobalStore((state) => state.setActivities)
-  // Adding loading state
+  // state
   const isLoaded = useMomentumGlobalStore((state) => state.isLoaded)
-  // pop up state
   const [isPopUpOpen, setPopUpOpen] = useState(false)
+  const [bike, setBike] = useState<any>(null)
+  
   //// Strava auth to start getting activities ////
   // Handle window
   const handleStravaAuth = () => {
@@ -105,6 +106,26 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
       console.error("Error signing out:", error.message)
     }
   }
+
+  // fetch bike data if any
+  const fetchBikeData = async () => {
+    if (!user?.id) return
+    
+    const { data, error } = await supabase
+      .from('bikes')
+      .select('*')
+      .eq('user_id', user.id)
+      .single(); // Assuming one primary bike for now
+
+    if (!error && data) {
+      setBike(data)
+    }
+  }
+
+  // Fetch bike on initial load
+  useEffect(() => {
+    if (user) fetchBikeData()
+  }, [user])
 
   // useEffect to hydrate with zustand store
   useEffect(() => {
