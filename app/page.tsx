@@ -16,7 +16,7 @@ const Home: React.FC = () => {
           </div>
           <Link 
             href="/login" 
-            className="px-6 py-2 rounded-full border border-slate-200 font-bold text-sm hover:bg-slate-50 transition-all"
+            className="bg-momentum-primary-purple text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-momentum-midnight-indigo transition-all"
           >
             Log in
           </Link>
@@ -42,7 +42,7 @@ const Home: React.FC = () => {
               
               <Link 
                 href="/login" 
-                className="px-8 py-4 bg-momentum-black text-white rounded-2xl font-black text-lg hover:scale-105 transition-all shadow-xl shadow-black/20 text-center"
+                className="px-8 py-4 bg-momentum-midnight-indigo text-white rounded-2xl font-black text-lg hover:scale-105 transition-all shadow-xl shadow-black/20 text-center"
               >
                 Start Demo
               </Link>
